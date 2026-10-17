@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Teaching & Lesson Prep Hub - Quản Lý Lộ Trình IELTS</title>
+  <title>Teaching & Lesson Prep Hub - Quản Lý Lộ Trình Đa Năng</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <style>
@@ -13,6 +13,8 @@
     .custom-scroll::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
     .inline-edit:hover { background-color: #f8fafc; outline: 1px dashed #94a3b8; }
     .inline-edit:focus { background-color: #ffffff; outline: 2px solid #3b82f6; border-radius: 4px; }
+    .header-edit:hover { background-color: rgba(255,255,255,0.12); outline: 1px dashed #93c5fd; border-radius: 4px; }
+    .header-edit:focus { background-color: #1e293b; outline: 2px solid #60a5fa; border-radius: 4px; color: #fff; }
 
     /* Thanh kéo dãn cột trong bảng */
     th.resizable-th { position: relative; overflow: hidden; }
@@ -58,11 +60,10 @@
         <div class="w-12 h-12 rounded-xl bg-blue-600 flex items-center justify-center text-2xl mx-auto mb-3 shadow-lg">
           <i class="fa-solid fa-graduation-cap"></i>
         </div>
-        <h2 class="text-lg font-bold tracking-wide">IELTS PREP HUB CLOUD</h2>
-        <p class="text-xs text-slate-400 mt-1">Hệ thống Quản lý Lộ trình & Giáo án Đa Tài Khoản</p>
+        <h2 class="text-lg font-bold tracking-wide">TEACHING PREP HUB CLOUD</h2>
+        <p class="text-xs text-slate-400 mt-1">Nền tảng Quản lý Lộ trình & Giáo án Đa Năng</p>
       </div>
 
-      <!-- Chuyển tab Đăng nhập / Tạo tài khoản mới -->
       <div class="grid grid-cols-2 border-b border-slate-200 bg-slate-50 text-xs font-bold">
         <button id="tabBtnLogin" onclick="switchAuthTab('login')" class="py-3 text-blue-600 border-b-2 border-blue-600 bg-white">
           <i class="fa-solid fa-right-to-bracket mr-1"></i> Đăng Nhập
@@ -74,8 +75,8 @@
 
       <div class="p-6 space-y-4 text-xs">
         <div id="authCenterNameBox" class="hidden">
-          <label class="block font-bold text-slate-700 mb-1">Tên Giáo Viên / Trung Tâm IELTS *</label>
-          <input type="text" id="authCenterName" placeholder="VD: IELTS Fighter / Thầy Bảo IELTS" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <label class="block font-bold text-slate-700 mb-1">Tên Giáo Viên / Trung Tâm *</label>
+          <input type="text" id="authCenterName" placeholder="VD: Trung tâm Anh Ngữ / Toán Thầy Bảo..." class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500">
         </div>
 
         <div>
@@ -94,7 +95,6 @@
           </div>
         </div>
 
-        <!-- Cấu hình Server Cloud URL (Chỉ cần nhập lần đầu nếu máy mới) -->
         <div class="pt-2 border-t border-slate-100">
           <div class="flex items-center justify-between mb-1">
             <label class="font-semibold text-slate-600">Google Apps Script Server URL *</label>
@@ -131,8 +131,8 @@
             <i class="fa-solid fa-graduation-cap"></i>
           </div>
           <div>
-            <h1 class="font-bold text-sm tracking-wide">IELTS PREP HUB</h1>
-            <p class="text-[11px] text-slate-400">Multi-User Cloud Edition</p>
+            <h1 class="font-bold text-sm tracking-wide">PREP HUB PRO</h1>
+            <p class="text-[11px] text-slate-400">Quản lý Lộ trình Tùy biến</p>
           </div>
         </div>
         <div class="flex items-center gap-1">
@@ -173,7 +173,7 @@
     <!-- Danh sách Học viên / Lớp học -->
     <div id="sidebarStudentsBox" style="height: 38%;" class="p-4 border-b border-slate-800 overflow-y-auto custom-scroll flex flex-col min-h-[120px]">
       <div class="flex items-center justify-between mb-3 shrink-0">
-        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Danh sách Học viên</span>
+        <span class="text-xs font-semibold uppercase tracking-wider text-slate-400">Danh sách Lớp / Học viên</span>
         <button onclick="openAddStudentModal()" class="bg-blue-600 hover:bg-blue-500 text-white text-xs px-2.5 py-1 rounded-md font-medium flex items-center gap-1 transition">
           <i class="fa-solid fa-plus"></i> Mở lớp
         </button>
@@ -225,39 +225,44 @@
               <i class="fa-solid fa-check-circle"></i> Đã đồng bộ
             </span>
           </div>
-          <p id="currentStudentSchedule" class="text-[11px] md:text-xs text-slate-500 mt-0.5 truncate">Hãy bấm "+ Mở lớp" để dán link Lộ trình, Lý thuyết và BTVN.</p>
+          <p id="currentStudentSchedule" class="text-[11px] md:text-xs text-slate-500 mt-0.5 truncate">Hãy bấm "+ Mở lớp" để gắn link Google Sheets lộ trình của bạn.</p>
         </div>
       </div>
 
-      <!-- Các nút thao tác nhanh -->
+      <!-- Các nút thao tác nhanh (Link Docs & BTVN tự động ẩn nếu người dùng không nhập) -->
       <div id="headerActionButtons" class="hidden items-center gap-1.5 flex-wrap">
         <a id="headerSheetBtn" href="#" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold shadow-sm transition">
           <i class="fa-solid fa-table"></i> <span class="hidden sm:inline">Lộ trình</span> (Sheet)
         </a>
-        <a id="headerDocsBtn" href="#" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition">
+        <a id="headerDocsBtn" href="#" target="_blank" class="hidden items-center gap-1 px-2.5 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition">
           <i class="fa-solid fa-book-open"></i> <span class="hidden sm:inline">Lý thuyết</span> (Docs)
         </a>
-        <a id="headerHwDocsBtn" href="#" target="_blank" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold shadow-sm transition">
+        <a id="headerHwDocsBtn" href="#" target="_blank" class="hidden items-center gap-1 px-2.5 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-700 text-white text-xs font-semibold shadow-sm transition">
           <i class="fa-solid fa-file-pen"></i> <span class="hidden sm:inline">Làm</span> BTVN
         </a>
         
-        <button onclick="syncFromGoogleSheet(true)" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold transition" title="Copy dữ liệu mới nhất từ Google Sheet về Web">
+        <button onclick="syncFromGoogleSheet(true)" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-emerald-300 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold transition" title="Đọc dữ liệu & cấu trúc cột từ Google Sheet về Web">
           <i class="fa-solid fa-cloud-arrow-down"></i> Sheet ➔ Web
         </button>
-        <button onclick="pushAllWebToGoogleSheet()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold shadow-sm transition" title="Cập nhật toàn bộ lộ trình đang có trên Web sang Google Sheet">
+        <button onclick="pushAllWebToGoogleSheet()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold shadow-sm transition" title="Cập nhật dữ liệu từ Web sang Google Sheet">
           <i class="fa-solid fa-cloud-arrow-up"></i> Web ➔ Sheet
         </button>
 
-        <button onclick="addSingleNewLesson()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition" title="Thêm 1 buổi học mới vào cuối lộ trình">
+        <!-- NÚT TÙY CHỈNH CỘT LINH HOẠT NHƯ EXCEL -->
+        <button onclick="openColumnManagerModal()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold shadow-sm transition" title="Thêm cột, Xóa cột, Đổi kiểu Tích vuông hoặc Văn bản">
+          <i class="fa-solid fa-table-columns"></i> Thêm / Xóa Cột
+        </button>
+
+        <button onclick="addSingleNewLesson()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold transition" title="Thêm 1 buổi học mới vào cuối bảng">
           <i class="fa-solid fa-plus"></i> Thêm buổi
         </button>
         <button onclick="openAutoScheduleModal()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold transition">
           <i class="fa-solid fa-calendar-plus"></i> Rải lịch / +Nhiều buổi
         </button>
-        <button onclick="openEditLinksModal()" class="inline-flex items-center gap-1 px-2 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold transition" title="Sửa 3 đường Link">
+        <button onclick="openEditLinksModal()" class="inline-flex items-center gap-1 px-2 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold transition" title="Sửa Link Sheet & Docs (Tùy chọn)">
           <i class="fa-solid fa-link"></i>
         </button>
-        <button onclick="deleteCurrentStudent()" class="inline-flex items-center gap-1 px-2 py-1.5 rounded-lg border border-rose-200 bg-rose-50 hover:bg-rose-600 hover:text-white text-rose-600 text-xs font-semibold transition" title="Xóa học viên">
+        <button onclick="deleteCurrentStudent()" class="inline-flex items-center gap-1 px-2 py-1.5 rounded-lg border border-rose-200 bg-rose-50 hover:bg-rose-600 hover:text-white text-rose-600 text-xs font-semibold transition" title="Xóa lớp học này">
           <i class="fa-solid fa-trash-can"></i>
         </button>
       </div>
@@ -280,8 +285,14 @@
         </button>
       </div>
 
-      <!-- Nút chuyển đổi Dạng Bảng <-> Dạng Thẻ -->
-      <div class="flex items-center gap-2">
+      <!-- Nút thêm cột nhanh & chuyển đổi Dạng Bảng <-> Dạng Thẻ -->
+      <div class="flex items-center gap-2 flex-wrap">
+        <button onclick="quickAddColumnDirect('TEXT')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 transition" title="Thêm nhanh 1 cột Chữ văn bản vào bảng">
+          + Cột Chữ 📝
+        </button>
+        <button onclick="quickAddColumnDirect('CHECKBOX')" class="px-2.5 py-1 rounded-lg text-xs font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 transition" title="Thêm nhanh 1 cột Ô tích vuông vào bảng">
+          + Cột Tích ☑️
+        </button>
         <div class="bg-white border border-slate-200 rounded-lg p-0.5 flex shadow-sm">
           <button onclick="setViewMode('GRID')" id="view-GRID" class="px-2.5 py-1 rounded-md text-xs font-semibold bg-blue-600 text-white flex items-center gap-1.5 transition">
             <i class="fa-solid fa-table-cells"></i> Dạng Bảng
@@ -302,7 +313,7 @@
       <!-- Thanh kéo dãn độ rộng Split-View Panel -->
       <div id="rightGutter" class="gutter-resizer hidden" title="Giữ chuột và kéo trái/phải để chỉnh độ rộng khung Soạn bài"></div>
 
-      <!-- KHUNG SOẠN THẢO KỊCH BẢN & CHECKLIST (SPLIT-VIEW PANEL BÊN PHẢI) -->
+      <!-- KHUNG SOẠN THẢO KỊCH BẢN & CHI TIẾT BUỔI HỌC (TỰ ĐỘNG SINH THEO CỘT TÙY CHỈNH) -->
       <div id="splitViewPanel" style="width: 460px;" class="fixed md:static inset-0 md:inset-auto bg-white border-l border-slate-200 h-full flex flex-col shadow-2xl shrink-0 z-40 hidden min-w-[300px] max-w-[850px]">
         <div class="p-4 border-b border-slate-200 bg-slate-50 flex items-center justify-between">
           <div>
@@ -354,88 +365,137 @@
                 <i class="fa-solid fa-list-check text-blue-600"></i> Kịch bản lên lớp & Checklist
               </label>
               <div class="flex items-center gap-2.5">
-                <a id="panelQuickDocsLink" href="#" target="_blank" class="text-[11px] text-blue-600 hover:underline font-semibold">Mở Lý thuyết ↗</a>
-                <a id="panelQuickHwDocsLink" href="#" target="_blank" class="text-[11px] text-purple-600 hover:underline font-semibold">Mở Docs BTVN ↗</a>
+                <a id="panelQuickDocsLink" href="#" target="_blank" class="hidden text-[11px] text-blue-600 hover:underline font-semibold">Mở Lý thuyết ↗</a>
+                <a id="panelQuickHwDocsLink" href="#" target="_blank" class="hidden text-[11px] text-purple-600 hover:underline font-semibold">Mở Docs BTVN ↗</a>
               </div>
             </div>
-            <textarea id="panelScript" oninput="saveFromSplitPanel()" rows="4" placeholder="- 5p đầu: Kiểm tra từ vựng Quizlet..." class="w-full text-xs border border-slate-300 rounded-xl p-3 leading-relaxed resize-y"></textarea>
+            <textarea id="panelScript" oninput="saveFromSplitPanel()" rows="4" placeholder="- 5p đầu: Kiểm tra bài cũ...&#10;- Ghi chú kịch bản giảng dạy cho buổi này..." class="w-full text-xs border border-slate-300 rounded-xl p-3 leading-relaxed resize-y"></textarea>
           </div>
 
+          <!-- Khu vực các Cột dữ liệu tự động hiển thị theo cấu trúc cột của Lớp -->
           <div class="border-t border-slate-200 pt-3 space-y-3">
-            <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-700 flex items-center gap-1">
-              <i class="fa-solid fa-table"></i> Dữ liệu đồng bộ Google Sheets
-            </span>
-
-            <div class="grid grid-cols-2 gap-2">
-              <div>
-                <label class="block text-[11px] font-semibold text-slate-600 mb-1">Cột A: Buổi & Ngày (VD: Buổi 9 (16/10))</label>
-                <input type="text" id="panelBuoi" oninput="saveFromSplitPanel()" class="w-full text-xs border border-slate-300 rounded-lg px-2.5 py-1.5 font-medium">
-              </div>
-              <div>
-                <label class="block text-[11px] font-semibold text-slate-600 mb-1">Cột B: Giai đoạn</label>
-                <input type="text" id="panelGiaiDoan" oninput="saveFromSplitPanel()" class="w-full text-xs border border-slate-300 rounded-lg px-2.5 py-1.5">
-              </div>
+            <div class="flex items-center justify-between">
+              <span class="text-[11px] font-bold uppercase tracking-wider text-emerald-700 flex items-center gap-1">
+                <i class="fa-solid fa-table"></i> Dữ liệu các cột trên Bảng
+              </span>
+              <button onclick="openColumnManagerModal()" class="text-[11px] text-violet-600 hover:underline font-semibold">
+                <i class="fa-solid fa-sliders mr-0.5"></i> Thêm/Xóa cột
+              </button>
             </div>
 
-            <div>
-              <label class="block text-[11px] font-semibold text-slate-600 mb-1">Cột C: Nội dung bài học</label>
-              <textarea id="panelNoiDung" oninput="saveFromSplitPanel()" rows="4" class="w-full text-xs border border-slate-300 rounded-lg p-2.5 leading-relaxed resize-y"></textarea>
-            </div>
-
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <label class="text-[11px] font-semibold text-slate-600">Cột D: Bài tập về nhà (BTVN)</label>
-              </div>
-              <textarea id="panelBtvn" oninput="saveFromSplitPanel()" rows="3" class="w-full text-xs border border-slate-300 rounded-lg p-2.5 leading-relaxed resize-y"></textarea>
-            </div>
-
-            <div>
-              <label class="block text-[11px] font-semibold text-slate-600 mb-1">Cột F: Nhận xét</label>
-              <textarea id="panelNhanXet" oninput="saveFromSplitPanel()" rows="3" class="w-full text-xs border border-slate-300 rounded-lg p-2.5 leading-relaxed resize-y"></textarea>
-            </div>
-
-            <div class="flex items-center justify-between pt-1">
-              <label class="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer">
-                <input type="checkbox" id="panelTienDo" onchange="saveFromSplitPanel()" class="w-4 h-4 text-emerald-600 rounded">
-                Cột E: Đã dạy xong
-              </label>
-              <label class="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer">
-                <input type="checkbox" id="panelHocPhi" onchange="saveFromSplitPanel()" class="w-4 h-4 text-blue-600 rounded">
-                Cột G: Đã đóng học phí
-              </label>
-            </div>
+            <div id="panelDynamicColumnsContainer" class="space-y-3"></div>
           </div>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- ==================== MODAL THÊM HỌC VIÊN ==================== -->
+  <!-- ==================== MODAL TÙY CHỈNH CỘT LINH HOẠT NHƯ EXCEL (THÊM / XÓA / ĐỔI KIỂU TÍCH VUÔNG HOẶC CHỮ) ==================== -->
+  <div id="columnManagerModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden p-3">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-2xl overflow-hidden flex flex-col max-h-[90vh]">
+      <div class="px-6 py-4 bg-violet-900 text-white flex items-center justify-between shrink-0">
+        <div>
+          <h3 class="font-bold text-sm"><i class="fa-solid fa-table-columns mr-2"></i>Quản Lý & Tùy Chỉnh Cột Dữ Liệu (Thêm / Xóa / Chọn Kiểu)</h3>
+          <p class="text-[11px] text-violet-200 mt-0.5">Tự do thêm cột mới, xóa cột, đổi tên và chọn kiểu dữ liệu là Chữ (Văn bản) hoặc Tích vuông (Checkbox)</p>
+        </div>
+        <button onclick="closeColumnManagerModal()" class="text-violet-200 hover:text-white"><i class="fa-solid fa-xmark text-lg"></i></button>
+      </div>
+
+      <div class="p-6 overflow-y-auto custom-scroll flex-1 space-y-4 text-xs">
+        <div class="flex flex-wrap items-center justify-between gap-2 bg-violet-50 border border-violet-200 p-3 rounded-xl">
+          <div class="text-violet-900">
+            <b>Thao tác nhanh:</b> Thêm cột mới vào bảng hoặc khôi phục lại mẫu 7 cột mặc định.
+          </div>
+          <div class="flex gap-2 flex-wrap">
+            <button onclick="resetToDefault7Columns()" class="px-3 py-1.5 rounded-lg border border-violet-300 bg-white hover:bg-violet-100 text-violet-800 font-semibold transition">
+              Khôi phục Mẫu Mặc định (7 cột)
+            </button>
+            <button onclick="addNewColumnInModal('TEXT')" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold transition">
+              + Thêm cột Chữ (Viết văn bản)
+            </button>
+            <button onclick="addNewColumnInModal('CHECKBOX')" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-semibold transition">
+              + Thêm cột Tích vuông (Checkbox)
+            </button>
+          </div>
+        </div>
+
+        <!-- Danh sách các cột hiện tại -->
+        <div class="border border-slate-200 rounded-xl overflow-hidden">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-100 text-slate-700 font-bold border-b border-slate-200 text-[11px]">
+                <th class="p-2.5 text-center w-12">Cột</th>
+                <th class="p-2.5">Tên Cột (Tự đặt theo ý muốn)</th>
+                <th class="p-2.5 w-48">Kiểu Dữ Liệu (Chữ / Tích vuông)</th>
+                <th class="p-2.5 w-48">Gắn vai trò Điều phối</th>
+                <th class="p-2.5 text-center w-28">Di chuyển / Xóa</th>
+              </tr>
+            </thead>
+            <tbody id="columnManagerListBody" class="divide-y divide-slate-200"></tbody>
+          </table>
+        </div>
+
+        <p class="text-[11px] text-slate-500">
+          💡 <b>Mẹo:</b> Bạn cũng có thể sửa trực tiếp tên cột, đổi kiểu <b>Chữ ⇄ Tích vuông</b> hoặc bấm nút <b>🗑️ Xóa cột</b> ngay trên thanh tiêu đề của bảng bên ngoài!
+        </p>
+      </div>
+
+      <div class="px-6 py-3.5 bg-slate-50 border-t flex justify-end gap-2 shrink-0">
+        <button onclick="closeColumnManagerModal()" class="px-4 py-2 rounded-lg border text-xs font-semibold text-slate-600">Hủy</button>
+        <button onclick="saveColumnManagerChanges()" class="px-5 py-2 rounded-lg bg-violet-600 hover:bg-violet-700 text-white text-xs font-bold shadow">
+          <i class="fa-solid fa-check mr-1"></i> Áp Dụng & Lưu Cấu Trúc Cột
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== MODAL THÊM HỌC VIÊN / MỞ LỚP MỚI (CÓ LỰA CHỌN MẪU & DOCS OPTIONAL) ==================== -->
   <div id="addStudentModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 hidden p-3">
     <div class="bg-white rounded-2xl shadow-2xl w-full max-w-lg overflow-hidden">
       <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
-        <h3 class="font-bold text-base"><i class="fa-solid fa-user-plus mr-2 text-blue-400"></i>Thêm Học Viên Mới</h3>
+        <h3 class="font-bold text-base"><i class="fa-solid fa-user-plus mr-2 text-blue-400"></i>Mở Lớp / Thêm Học Viên Mới</h3>
         <button onclick="closeAddStudentModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
       </div>
       <div class="p-6 space-y-4 text-xs max-h-[85vh] overflow-y-auto custom-scroll">
         <div>
-          <label class="block font-semibold text-slate-700 mb-1">Tên Học Viên / Lớp *</label>
-          <input type="text" id="newStudentName" placeholder="VD: Hoàng Minh - IELTS" class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm">
+          <label class="block font-semibold text-slate-700 mb-1">Tên Học Viên / Tên Lớp Học *</label>
+          <input type="text" id="newStudentName" placeholder="VD: Hoàng Minh - IELTS / Lớp Toán 12A..." class="w-full border border-slate-300 rounded-lg px-3 py-2 text-sm">
         </div>
 
         <div class="p-3.5 bg-slate-50 border border-slate-200 rounded-xl space-y-3">
           <div>
-            <label class="block font-bold text-emerald-800 mb-1">1. Link Google Sheets Lộ Trình *</label>
+            <label class="block font-bold text-emerald-800 mb-1">
+              1. Link Google Sheets Quản Lý Lộ Trình (Bắt buộc) *
+            </label>
             <input type="text" id="newStudentSheetUrl" placeholder="https://docs.google.com/spreadsheets/d/..." class="w-full border border-emerald-300 rounded-lg px-3 py-2 bg-white">
           </div>
-          <div>
-            <label class="block font-bold text-blue-800 mb-1">2. Link Google Docs Lý Thuyết</label>
-            <input type="text" id="newStudentDocsUrl" placeholder="https://docs.google.com/document/d/..." class="w-full border border-blue-300 rounded-lg px-3 py-2 bg-white">
+
+          <div class="pt-1 border-t border-slate-200/80">
+            <label class="block font-semibold text-blue-800 mb-1">
+              2. Link Google Docs Lý Thuyết <span class="text-slate-400 font-normal">(Tùy chọn - Không bắt buộc)</span>
+            </label>
+            <input type="text" id="newStudentDocsUrl" placeholder="Có thể bỏ trống nếu không dùng..." class="w-full border border-slate-300 rounded-lg px-3 py-1.5 bg-white">
           </div>
+
           <div>
-            <label class="block font-bold text-purple-800 mb-1">3. Link Google Docs BTVN</label>
-            <input type="text" id="newStudentHwDocsUrl" placeholder="https://docs.google.com/document/d/..." class="w-full border border-purple-300 rounded-lg px-3 py-2 bg-white">
+            <label class="block font-semibold text-purple-800 mb-1">
+              3. Link Google Docs Làm BTVN <span class="text-slate-400 font-normal">(Tùy chọn - Không bắt buộc)</span>
+            </label>
+            <input type="text" id="newStudentHwDocsUrl" placeholder="Có thể bỏ trống nếu không dùng..." class="w-full border border-slate-300 rounded-lg px-3 py-1.5 bg-white">
           </div>
+        </div>
+
+        <!-- Lựa chọn Bố cục Bảng (Mẫu mặc định hoặc Theo file Sheet của khách hoặc Tự tạo) -->
+        <div class="p-3.5 bg-violet-50/70 border border-violet-200 rounded-xl space-y-2">
+          <label class="block font-bold text-violet-900">Chọn Bố Cục Bảng Cột Dữ Liệu:</label>
+          <select id="newStudentTemplateMode" class="w-full border border-violet-300 rounded-lg px-3 py-2 bg-white font-semibold text-slate-800">
+            <option value="DEFAULT_7">1. Dùng Mẫu Mặc Định Chuẩn (7 cột: Buổi, Giai đoạn, Nội dung, BTVN, Tiến độ, Nhận xét, Học phí)</option>
+            <option value="AUTO_FROM_SHEET">2. Tự động đọc & tạo cột theo đúng bố cục file Google Sheet đã dán ở trên</option>
+            <option value="CUSTOM_BUILDER">3. Tự tạo cột mới từ đầu theo ý muốn (Thêm/Xóa cột Chữ & Tích vuông)</option>
+          </select>
+          <p class="text-[11px] text-violet-700 leading-relaxed">
+            * Dù chọn cách nào, sau khi tạo lớp bạn vẫn luôn có thể <b>Thêm cột, Xóa cột, Sửa tên cột</b> và chọn kiểu <b>Tích vuông / Chữ</b> thoải mái ngay trên bảng!
+          </p>
         </div>
 
         <div class="grid grid-cols-2 gap-3">
@@ -444,30 +504,22 @@
             <select id="newStudentTime24" class="w-full border border-slate-300 rounded-lg px-3 py-2 bg-white font-mono"></select>
           </div>
           <div>
-            <label class="block font-semibold text-slate-700 mb-1">Nạp lộ trình</label>
-            <select id="newStudentInitMode" class="w-full border border-slate-300 rounded-lg px-3 py-2 bg-white">
-              <option value="READ_SHEET">Đọc dữ liệu từ Sheet</option>
-              <option value="EMPTY">Tạo bảng trống</option>
-            </select>
-          </div>
-        </div>
-
-        <div>
-          <label class="block font-semibold text-slate-700 mb-1.5">Thứ học cố định trong tuần</label>
-          <div class="flex gap-2 flex-wrap" id="newStudentDays">
-            <label class="px-2.5 py-1.5 border rounded-lg cursor-pointer"><input type="checkbox" value="1" class="mr-1">T2</label>
-            <label class="px-2.5 py-1.5 border rounded-lg cursor-pointer"><input type="checkbox" value="2" class="mr-1">T3</label>
-            <label class="px-2.5 py-1.5 border rounded-lg cursor-pointer"><input type="checkbox" value="3" checked class="mr-1">T4</label>
-            <label class="px-2.5 py-1.5 border rounded-lg cursor-pointer"><input type="checkbox" value="4" class="mr-1">T5</label>
-            <label class="px-2.5 py-1.5 border rounded-lg cursor-pointer"><input type="checkbox" value="5" class="mr-1">T6</label>
-            <label class="px-2.5 py-1.5 border rounded-lg cursor-pointer"><input type="checkbox" value="6" checked class="mr-1">T7</label>
-            <label class="px-2.5 py-1.5 border rounded-lg cursor-pointer"><input type="checkbox" value="0" class="mr-1">CN</label>
+            <label class="block font-semibold text-slate-700 mb-1">Thứ học cố định trong tuần</label>
+            <div class="flex gap-1.5 flex-wrap pt-1" id="newStudentDays">
+              <label class="px-2 py-1 border rounded bg-white cursor-pointer"><input type="checkbox" value="1" class="mr-1">T2</label>
+              <label class="px-2 py-1 border rounded bg-white cursor-pointer"><input type="checkbox" value="2" class="mr-1">T3</label>
+              <label class="px-2 py-1 border rounded bg-white cursor-pointer"><input type="checkbox" value="3" checked class="mr-1">T4</label>
+              <label class="px-2 py-1 border rounded bg-white cursor-pointer"><input type="checkbox" value="4" class="mr-1">T5</label>
+              <label class="px-2 py-1 border rounded bg-white cursor-pointer"><input type="checkbox" value="5" class="mr-1">T6</label>
+              <label class="px-2 py-1 border rounded bg-white cursor-pointer"><input type="checkbox" value="6" checked class="mr-1">T7</label>
+              <label class="px-2 py-1 border rounded bg-white cursor-pointer"><input type="checkbox" value="0" class="mr-1">CN</label>
+            </div>
           </div>
         </div>
       </div>
       <div class="px-6 py-3.5 bg-slate-50 border-t flex justify-end gap-2">
         <button onclick="closeAddStudentModal()" class="px-4 py-2 rounded-lg border text-xs font-semibold text-slate-600">Hủy</button>
-        <button onclick="createNewStudent()" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold">Tạo & Đọc Sheet</button>
+        <button onclick="createNewStudent()" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold">Tạo Lớp & Đồng Bộ</button>
       </div>
     </div>
   </div>
@@ -482,7 +534,7 @@
       <div class="p-6 space-y-4 text-xs">
         <div class="grid grid-cols-2 gap-3">
           <div>
-            <label class="block font-semibold text-slate-700 mb-1">Tên Lớp</label>
+            <label class="block font-semibold text-slate-700 mb-1">Tên Lớp / Học viên</label>
             <input type="text" id="editStudentName" class="w-full border border-slate-300 rounded-lg px-3 py-2">
           </div>
           <div>
@@ -491,21 +543,21 @@
           </div>
         </div>
         <div>
-          <label class="block font-bold text-emerald-800 mb-1">1. Link Sheet Lộ Trình</label>
+          <label class="block font-bold text-emerald-800 mb-1">1. Link Google Sheets Lộ Trình (Bắt buộc) *</label>
           <input type="text" id="editStudentSheetUrl" class="w-full border border-emerald-300 rounded-lg px-3 py-2">
         </div>
         <div>
-          <label class="block font-bold text-blue-800 mb-1">2. Link Docs Lý Thuyết</label>
-          <input type="text" id="editStudentDocsUrl" class="w-full border border-blue-300 rounded-lg px-3 py-2">
+          <label class="block font-semibold text-blue-800 mb-1">2. Link Docs Lý Thuyết <span class="text-slate-400 font-normal">(Tùy chọn - Xóa trống để ẩn nút)</span></label>
+          <input type="text" id="editStudentDocsUrl" placeholder="Không bắt buộc..." class="w-full border border-slate-300 rounded-lg px-3 py-2">
         </div>
         <div>
-          <label class="block font-bold text-purple-800 mb-1">3. Link Docs BTVN</label>
-          <input type="text" id="editStudentHwDocsUrl" class="w-full border border-purple-300 rounded-lg px-3 py-2">
+          <label class="block font-semibold text-purple-800 mb-1">3. Link Docs BTVN <span class="text-slate-400 font-normal">(Tùy chọn - Xóa trống để ẩn nút)</span></label>
+          <input type="text" id="editStudentHwDocsUrl" placeholder="Không bắt buộc..." class="w-full border border-slate-300 rounded-lg px-3 py-2">
         </div>
       </div>
       <div class="px-6 py-3 bg-slate-50 border-t flex justify-end gap-2">
         <button onclick="closeEditLinksModal()" class="px-4 py-2 rounded-lg border text-xs font-semibold text-slate-600">Hủy</button>
-        <button onclick="saveEditedLinks()" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold">Lưu & Đồng bộ</button>
+        <button onclick="saveEditedLinks()" class="px-4 py-2 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold">Lưu Thay Đổi</button>
       </div>
     </div>
   </div>
@@ -519,7 +571,7 @@
       </div>
       <div class="p-6 space-y-4 text-xs">
         <p class="text-slate-600 leading-relaxed">
-          Giữ nguyên các buổi <b>Đã dạy</b>, tự động tính ngày cho các buổi <b>Chưa dạy</b> và cho phép cộng thêm buổi mới nếu học sinh học nhiều hơn 32 buổi.
+          Giữ nguyên các buổi <b>Đã dạy</b>, tự động tính ngày cho các buổi <b>Chưa dạy</b> và cho phép cộng thêm buổi mới vào cuối lộ trình.
         </p>
         <div class="grid grid-cols-2 gap-3">
           <div>
@@ -572,7 +624,7 @@
         <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
           <div>
             <div class="font-bold text-slate-800">Tài khoản đang sử dụng: <span id="settingsCurrentEmail" class="text-blue-600">Chưa đăng nhập</span></div>
-            <p class="text-[11px] text-slate-500 mt-0.5">Mỗi tài khoản Gmail có danh sách học viên độc lập trên Cloud.</p>
+            <p class="text-[11px] text-slate-500 mt-0.5">Mỗi tài khoản Gmail có danh sách lớp & cấu trúc cột độc lập trên Cloud.</p>
           </div>
           <div class="flex gap-2">
             <button onclick="closeSettingsModal(); openAuthModal();" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold">
@@ -602,6 +654,19 @@
 
   <!-- ==================== JAVASCRIPT LOGIC ==================== -->
   <script>
+    // Bộ 7 cột Mặc định chuẩn (Tương thích 100% với dữ liệu cũ của bạn)
+    function getDefault7ColumnsSchema() {
+      return [
+        { key: 'buoi', title: 'Buổi (A)', type: 'TEXT', role: 'SESSION', width: '120px' },
+        { key: 'giaiDoan', title: 'Giai đoạn (B)', type: 'TEXT', role: 'STAGE', width: '150px' },
+        { key: 'noiDung', title: 'Nội dung bài học (C)', type: 'TEXT', role: 'CONTENT', width: '300px' },
+        { key: 'btvn', title: 'BTVN (D)', type: 'TEXT', role: 'HOMEWORK', width: '240px' },
+        { key: 'tienDo', title: 'Tiến độ (E)', type: 'CHECKBOX', role: 'PROGRESS', width: '95px' },
+        { key: 'nhanXet', title: 'Nhận xét (F)', type: 'TEXT', role: 'NOTE', width: '240px' },
+        { key: 'hocPhi', title: 'Học phí (G)', type: 'CHECKBOX', role: 'TUITION', width: '95px' }
+      ];
+    }
+
     let state = {
       students: [],
       activeStudentId: null,
@@ -609,9 +674,65 @@
       viewMode: 'GRID',
       selectedRowIndex: null,
       gasWebhookUrl: localStorage.getItem('ielts_hub_gas_url') || '',
-      authMode: 'login', // 'login' | 'register'
-      currentUser: null  // { email, password, centerName }
+      authMode: 'login',
+      currentUser: null,
+      editingColumnsTemp: []
     };
+
+    function ensureStudentColumns(stu) {
+      if (!stu) return [];
+      if (!Array.isArray(stu.columns) || stu.columns.length === 0) {
+        stu.columns = getDefault7ColumnsSchema();
+      }
+      return stu.columns;
+    }
+
+    function getColumnByRole(stu, roleName, fallbackKey) {
+      const cols = ensureStudentColumns(stu);
+      return cols.find(c => c.role === roleName) || cols.find(c => c.key === fallbackKey) || cols[0];
+    }
+
+    function getLessonCellValue(lesson, col) {
+      if (!lesson || !col) return col?.type === 'CHECKBOX' ? false : '';
+      const raw = lesson[col.key];
+      if (col.type === 'CHECKBOX') {
+        return raw === true || String(raw).trim().toUpperCase() === 'TRUE' || String(raw).trim() === '1' || String(raw).trim() === '✓';
+      }
+      return raw !== undefined && raw !== null ? String(raw) : '';
+    }
+
+    function isLessonCompleted(stu, lesson) {
+      const progCol = getColumnByRole(stu, 'PROGRESS', 'tienDo');
+      if (progCol && progCol.type === 'CHECKBOX') {
+        return getLessonCellValue(lesson, progCol) === true;
+      }
+      return !!lesson.tienDo;
+    }
+
+    function getLessonSessionText(stu, lesson) {
+      const sessCol = getColumnByRole(stu, 'SESSION', 'buoi');
+      if (sessCol) {
+        return String(getLessonCellValue(lesson, sessCol) || lesson.buoi || `Dòng ${lesson.rowIndex}`);
+      }
+      return String(lesson.buoi || `Dòng ${lesson.rowIndex}`);
+    }
+
+    function getLessonPrimaryContentText(stu, lesson) {
+      const contentCol = getColumnByRole(stu, 'CONTENT', 'noiDung');
+      if (contentCol) {
+        const val = getLessonCellValue(lesson, contentCol);
+        if (val) return String(val);
+      }
+      const cols = ensureStudentColumns(stu).filter(c => c.type === 'TEXT');
+      if (cols.length > 1) return String(getLessonCellValue(lesson, cols[1]) || '');
+      return String(lesson.noiDung || '');
+    }
+
+    function hasValidOptionalUrl(url) {
+      if (!url) return false;
+      const s = String(url).trim();
+      return s !== '' && s !== '#' && s.startsWith('http');
+    }
 
     function populate24HourSelects() {
       const ids = ['panelStartHour24', 'newStudentTime24', 'editStudentTime24', 'schedTime24'];
@@ -647,17 +768,16 @@
       document.getElementById('gasWebhookUrl').value = state.gasWebhookUrl;
       document.getElementById('authGasUrl').value = state.gasWebhookUrl;
 
-      // Kiểm tra phiên đăng nhập tài khoản Gmail đã lưu
       const savedUser = localStorage.getItem('ielts_hub_current_user');
       if (savedUser) {
         try { state.currentUser = JSON.parse(savedUser); } catch (e) { state.currentUser = null; }
       }
 
-      // Đọc danh sách học sinh từ bộ nhớ máy trước
       const savedStudents = localStorage.getItem(getLocalStorageKey()) || localStorage.getItem('ielts_hub_students_v2');
       if (savedStudents) {
         try { state.students = JSON.parse(savedStudents); } catch (e) { state.students = []; }
       }
+      state.students.forEach(ensureStudentColumns);
       state.activeStudentId = state.students[0]?.id || null;
 
       updateUserSidebarUI();
@@ -665,26 +785,23 @@
       updateClockGMT7();
       setInterval(updateClockGMT7, 15000);
 
-      // Nếu đã đăng nhập tài khoản Gmail -> Tự động đồng bộ danh sách học sinh từ Cloud về
       if (state.currentUser && state.gasWebhookUrl) {
         await pullAccountFromCloud(false);
         if (state.students.length > 0) {
           syncAllStudentsSheets(false);
         }
-      } else {
-        // Nếu chưa đăng nhập tài khoản -> Mở bảng Đăng nhập / Đăng ký Gmail
+      } else if (!state.currentUser && state.students.length === 0) {
         openAuthModal();
       }
     }
 
     function saveToLocal() {
       localStorage.setItem(getLocalStorageKey(), JSON.stringify(state.students));
-      // Giữ bản sao ở khóa v2 để tương thích ngược
       localStorage.setItem('ielts_hub_students_v2', JSON.stringify(state.students));
       pushAccountToCloud(false);
     }
 
-    // ==================== HỆ THỐNG ĐĂNG KÝ / ĐĂNG NHẬP ĐA TÀI KHOẢN GMAIL (JSONP + CLOUD) ====================
+    // ==================== HỆ THỐNG ĐĂNG KÝ / ĐĂNG NHẬP ĐA TÀI KHOẢN GMAIL ====================
     function callGasJsonp(paramsObj) {
       return new Promise((resolve, reject) => {
         if (!state.gasWebhookUrl) {
@@ -711,7 +828,7 @@
 
         script.onerror = function() {
           cleanup();
-          reject(new Error('Không thể kết nối tới Google Apps Script URL. Hãy kiểm tra lại quyền Deploy (Anyone).'));
+          reject(new Error('Không thể kết nối tới Google Apps Script URL.'));
         };
 
         const query = Object.keys(paramsObj)
@@ -827,7 +944,6 @@
           return;
         }
 
-        // Lưu thông tin tài khoản đang đăng nhập
         state.currentUser = {
           email: email,
           password: password,
@@ -835,13 +951,12 @@
         };
         localStorage.setItem('ielts_hub_current_user', JSON.stringify(state.currentUser));
 
-        // Nếu tài khoản trên Cloud đã có học sinh -> Tải về máy
         if (Array.isArray(res.students) && res.students.length > 0) {
           state.students = res.students;
+          state.students.forEach(ensureStudentColumns);
           state.activeStudentId = state.students[0]?.id || null;
           localStorage.setItem(getLocalStorageKey(), JSON.stringify(state.students));
         } else if (state.students.length > 0) {
-          // Nếu đăng ký tài khoản mới mà trên máy tính hiện tại đang có sẵn học sinh (VD: Hoàng Minh, Phương Thảo) -> Tự đẩy lên tài khoản mới này!
           await pushAccountToCloud(false);
         } else {
           state.students = [];
@@ -855,7 +970,7 @@
           syncAllStudentsSheets(false);
         }
       } catch (err) {
-        errBox.innerText = '⚠️ Lỗi kết nối: Hãy đảm bảo bạn đã cập nhật mã Apps Script mới nhất và chọn Deploy (New version)!';
+        errBox.innerText = '⚠️ Lỗi kết nối: Hãy đảm bảo URL kết thúc bằng /exec và đã chọn quyền truy cập "Bất kỳ ai (Anyone)"!';
         errBox.classList.remove('hidden');
       } finally {
         btn.disabled = false;
@@ -877,10 +992,7 @@
 
     async function pushAccountToCloud(showAlert = false) {
       if (!state.gasWebhookUrl || !state.currentUser || !state.currentUser.email) {
-        if (showAlert) {
-          alert('⚠️ Vui lòng đăng nhập tài khoản Gmail trước để lưu dữ liệu lên Cloud!');
-          openAuthModal();
-        }
+        if (showAlert) openAuthModal();
         return;
       }
       setSyncBadge('SYNCING');
@@ -898,7 +1010,7 @@
           })
         });
         setSyncBadge('SAVED');
-        if (showAlert) alert(`✅ Đã lưu toàn bộ ${state.students.length} học viên vào tài khoản Gmail (${state.currentUser.email}) trên Cloud!`);
+        if (showAlert) alert(`✅ Đã lưu toàn bộ ${state.students.length} lớp học (cùng cấu trúc cột tùy chỉnh) lên tài khoản Gmail (${state.currentUser.email})!`);
       } catch (e) {
         setSyncBadge('ERROR');
         if (showAlert) alert('❌ Lỗi khi lưu dữ liệu lên Cloud.');
@@ -921,19 +1033,20 @@
         if (res && res.ok && Array.isArray(res.students)) {
           if (res.students.length > 0 || state.students.length === 0) {
             state.students = res.students;
+            state.students.forEach(ensureStudentColumns);
             state.activeStudentId = state.students[0]?.id || null;
             localStorage.setItem(getLocalStorageKey(), JSON.stringify(state.students));
             renderAll();
           }
           setSyncBadge('SAVED');
-          if (showAlert) alert(`✅ Đã đồng bộ ${state.students.length} học viên từ tài khoản ${state.currentUser.email}!`);
+          if (showAlert) alert(`✅ Đã đồng bộ ${state.students.length} lớp học từ tài khoản ${state.currentUser.email}!`);
         } else {
           setSyncBadge('ERROR');
           if (showAlert) alert('⚠️ ' + (res?.message || 'Không tải được dữ liệu tài khoản.'));
         }
       } catch (e) {
         setSyncBadge('ERROR');
-        if (showAlert) alert('⚠️ Chưa kết nối được Cloud. Hãy kiểm tra lại Apps Script!');
+        if (showAlert) alert('⚠️ Chưa kết nối được Cloud.');
       }
     }
 
@@ -952,7 +1065,220 @@
       renderPrepReminders();
     }
 
-    // ==================== THUẬT TOÁN ĐỌC NGÀY & GIỜ CHUẨN XÁC 100% CHO TẤT CẢ HỌC VIÊN (GIỮ NGUYÊN HOÀN HẢO) ====================
+    // ==================== THAO TÁC THÊM / XÓA / SỬA CỘT TRỰC TIẾP TRÊN BẢNG & TRONG MODAL ====================
+    function quickAddColumnDirect(type = 'TEXT') {
+      const stu = getActiveStudent();
+      if (!stu) {
+        alert('Hãy chọn hoặc mở 1 lớp học trước khi thêm cột!');
+        return;
+      }
+      const cols = ensureStudentColumns(stu);
+      const defaultTitle = type === 'CHECKBOX' ? `Tích chọn ${cols.length + 1}` : `Cột chữ ${cols.length + 1}`;
+      const colName = prompt(
+        type === 'CHECKBOX'
+          ? 'Nhập tên cho cột TÍCH VUÔNG (Checkbox) mới:'
+          : 'Nhập tên cho cột CHỮ (Văn bản) mới:',
+        defaultTitle
+      );
+      if (colName === null) return;
+
+      const newKey = 'custom_col_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+      cols.push({
+        key: newKey,
+        title: colName.trim() || defaultTitle,
+        type: type,
+        role: 'NONE',
+        width: type === 'CHECKBOX' ? '100px' : '200px'
+      });
+
+      (stu.lessons || []).forEach(l => {
+        l[newKey] = type === 'CHECKBOX' ? false : '';
+      });
+
+      saveToLocal();
+      renderAll();
+      if (state.selectedRowIndex) openSplitPanel(state.selectedRowIndex);
+    }
+
+    function inlineRenameColumnTitle(colIdx, newTitle) {
+      const stu = getActiveStudent();
+      if (!stu) return;
+      const cols = ensureStudentColumns(stu);
+      if (!cols[colIdx]) return;
+      const cleaned = String(newTitle || '').trim();
+      if (cleaned) {
+        cols[colIdx].title = cleaned;
+        saveToLocal();
+        if (state.selectedRowIndex) openSplitPanel(state.selectedRowIndex);
+      } else {
+        renderMainWorkspace();
+      }
+    }
+
+    function inlineToggleColumnType(colIdx) {
+      const stu = getActiveStudent();
+      if (!stu) return;
+      const cols = ensureStudentColumns(stu);
+      const col = cols[colIdx];
+      if (!col) return;
+
+      const nextType = col.type === 'CHECKBOX' ? 'TEXT' : 'CHECKBOX';
+      col.type = nextType;
+      col.width = nextType === 'CHECKBOX' ? '100px' : '200px';
+
+      (stu.lessons || []).forEach(l => {
+        if (nextType === 'CHECKBOX') {
+          const s = String(l[col.key] || '').trim().toUpperCase();
+          l[col.key] = (l[col.key] === true || s === 'TRUE' || s === '1' || s === '✓' || s === 'X');
+        } else {
+          if (typeof l[col.key] === 'boolean') {
+            l[col.key] = l[col.key] ? '✓' : '';
+          }
+        }
+      });
+
+      saveToLocal();
+      renderAll();
+      if (state.selectedRowIndex) openSplitPanel(state.selectedRowIndex);
+    }
+
+    function inlineDeleteColumnDirect(colIdx) {
+      const stu = getActiveStudent();
+      if (!stu) return;
+      const cols = ensureStudentColumns(stu);
+      if (cols.length <= 1) {
+        alert('Bảng phải có ít nhất 1 cột dữ liệu!');
+        return;
+      }
+      const col = cols[colIdx];
+      if (!confirm(`Bạn có chắc chắn muốn XÓA cột "${col.title}" khỏi bảng không?`)) return;
+      cols.splice(colIdx, 1);
+      saveToLocal();
+      renderAll();
+      if (state.selectedRowIndex) openSplitPanel(state.selectedRowIndex);
+    }
+
+    function openColumnManagerModal() {
+      const stu = getActiveStudent();
+      if (!stu) return;
+      state.editingColumnsTemp = JSON.parse(JSON.stringify(ensureStudentColumns(stu)));
+      renderColumnManagerModalList();
+      document.getElementById('columnManagerModal').classList.remove('hidden');
+    }
+
+    function closeColumnManagerModal() {
+      document.getElementById('columnManagerModal').classList.add('hidden');
+    }
+
+    function renderColumnManagerModalList() {
+      const tbody = document.getElementById('columnManagerListBody');
+      tbody.innerHTML = state.editingColumnsTemp.map((col, idx) => `
+        <tr class="hover:bg-slate-50">
+          <td class="p-2.5 text-center font-bold text-slate-500">#${idx + 1}</td>
+          <td class="p-2.5">
+            <input type="text" value="${escapeHtml(col.title)}" oninput="state.editingColumnsTemp[${idx}].title = this.value" placeholder="Nhập tên cột..." class="w-full border border-slate-300 rounded-lg px-2.5 py-1.5 font-semibold text-slate-800">
+          </td>
+          <td class="p-2.5">
+            <select onchange="state.editingColumnsTemp[${idx}].type = this.value; renderColumnManagerModalList();" class="w-full border border-slate-300 rounded-lg px-2 py-1.5 font-semibold ${col.type === 'CHECKBOX' ? 'text-emerald-700 bg-emerald-50' : 'text-blue-700 bg-blue-50'}">
+              <option value="TEXT" ${col.type === 'TEXT' ? 'selected' : ''}>📝 Chữ / Văn bản (Viết)</option>
+              <option value="CHECKBOX" ${col.type === 'CHECKBOX' ? 'selected' : ''}>☑️ Tích vuông (Checkbox)</option>
+            </select>
+          </td>
+          <td class="p-2.5">
+            <select onchange="updateColumnRoleInModal(${idx}, this.value)" class="w-full border border-slate-300 rounded-lg px-2 py-1.5 text-[11px] bg-white">
+              <option value="NONE" ${(!col.role || col.role === 'NONE') ? 'selected' : ''}>-- Cột thông thường --</option>
+              <option value="SESSION" ${col.role === 'SESSION' ? 'selected' : ''}>📅 Cột Buổi / Ngày học</option>
+              <option value="PROGRESS" ${col.role === 'PROGRESS' ? 'selected' : ''}>✅ Cột Tiến độ (Đã dạy)</option>
+              <option value="CONTENT" ${col.role === 'CONTENT' ? 'selected' : ''}>📖 Cột Nội dung chính</option>
+              <option value="STAGE" ${col.role === 'STAGE' ? 'selected' : ''}>🏷️ Cột Giai đoạn / Chủ đề</option>
+            </select>
+          </td>
+          <td class="p-2.5 text-center">
+            <div class="inline-flex items-center gap-1">
+              <button onclick="moveColumnInModal(${idx}, -1)" class="p-1.5 rounded hover:bg-slate-200 text-slate-600" title="Chuyển lên trước">
+                <i class="fa-solid fa-arrow-up"></i>
+              </button>
+              <button onclick="moveColumnInModal(${idx}, 1)" class="p-1.5 rounded hover:bg-slate-200 text-slate-600" title="Chuyển xuống sau">
+                <i class="fa-solid fa-arrow-down"></i>
+              </button>
+              <button onclick="deleteColumnInModal(${idx})" class="p-1.5 rounded bg-rose-50 hover:bg-rose-600 hover:text-white text-rose-600 transition" title="Xóa cột này">
+                <i class="fa-solid fa-trash-can"></i>
+              </button>
+            </div>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    function updateColumnRoleInModal(idx, newRole) {
+      if (newRole === 'SESSION' || newRole === 'PROGRESS') {
+        state.editingColumnsTemp.forEach((c, i) => {
+          if (i !== idx && c.role === newRole) c.role = 'NONE';
+        });
+      }
+      state.editingColumnsTemp[idx].role = newRole;
+      if (newRole === 'PROGRESS') {
+        state.editingColumnsTemp[idx].type = 'CHECKBOX';
+      }
+      renderColumnManagerModalList();
+    }
+
+    function addNewColumnInModal(type = 'TEXT') {
+      const newKey = 'custom_col_' + Date.now() + '_' + Math.floor(Math.random() * 1000);
+      const count = state.editingColumnsTemp.length + 1;
+      state.editingColumnsTemp.push({
+        key: newKey,
+        title: type === 'CHECKBOX' ? `Tích chọn ${count}` : `Cột mới ${count}`,
+        type: type,
+        role: 'NONE',
+        width: type === 'CHECKBOX' ? '100px' : '200px'
+      });
+      renderColumnManagerModalList();
+    }
+
+    function moveColumnInModal(idx, dir) {
+      const target = idx + dir;
+      if (target < 0 || target >= state.editingColumnsTemp.length) return;
+      const temp = state.editingColumnsTemp[idx];
+      state.editingColumnsTemp[idx] = state.editingColumnsTemp[target];
+      state.editingColumnsTemp[target] = temp;
+      renderColumnManagerModalList();
+    }
+
+    function deleteColumnInModal(idx) {
+      if (state.editingColumnsTemp.length <= 1) {
+        alert('Bảng cần có ít nhất 1 cột dữ liệu!');
+        return;
+      }
+      const colName = state.editingColumnsTemp[idx].title;
+      if (!confirm(`Bạn có chắc muốn xóa cột "${colName}" không?`)) return;
+      state.editingColumnsTemp.splice(idx, 1);
+      renderColumnManagerModalList();
+    }
+
+    function resetToDefault7Columns() {
+      if (!confirm('Khôi phục lại bộ 7 cột Mặc định (Buổi, Giai đoạn, Nội dung, BTVN, Tiến độ, Nhận xét, Học phí)?')) return;
+      state.editingColumnsTemp = getDefault7ColumnsSchema();
+      renderColumnManagerModalList();
+    }
+
+    function saveColumnManagerChanges() {
+      const stu = getActiveStudent();
+      if (!stu) return;
+      const cleaned = state.editingColumnsTemp.map((c, i) => ({
+        ...c,
+        title: String(c.title || `Cột ${i + 1}`).trim()
+      }));
+      stu.columns = cleaned;
+      saveToLocal();
+      closeColumnManagerModal();
+      renderAll();
+      if (state.selectedRowIndex) {
+        openSplitPanel(state.selectedRowIndex);
+      }
+    }
+
+    // ==================== THUẬT TOÁN ĐỌC NGÀY & GIỜ CHUẨN XÁC 100% CHO TRẠM ĐIỀU PHỐI ====================
     function extractDayMonthFromText(text) {
       if (!text) return null;
       const str = String(text);
@@ -987,7 +1313,8 @@
           }
         }
 
-        const dm = extractDayMonthFromText(lesson.buoi);
+        const sessionText = getLessonSessionText(student, lesson);
+        const dm = extractDayMonthFromText(sessionText);
         if (dm) {
           if (dm.yyyy) {
             runningYear = dm.yyyy;
@@ -1039,7 +1366,7 @@
       return resultMap;
     }
 
-    // ==================== TRẠM ĐIỀU PHỐI CHUNG: CẬP NHẬT ĐẦY ĐỦ TẤT CẢ CÁC SHEET & LẤY 4 CA GẦN NHẤT ====================
+    // ==================== TRẠM ĐIỀU PHỐI CHUNG (GIỮ NGUYÊN HOÀN HẢO 4 CA GẦN NHẤT) ====================
     function renderPrepReminders() {
       const container = document.getElementById('prepReminderList');
       let allUpcoming = [];
@@ -1050,7 +1377,7 @@
       state.students.forEach(stu => {
         const timeMap = computeStudentLessonTimestamps(stu);
         (stu.lessons || []).forEach(l => {
-          if (!l.tienDo) {
+          if (!isLessonCompleted(stu, l)) {
             const info = timeMap[l.rowIndex] || {
               ts: 9999999999999,
               dateLabel: 'Chưa xếp ngày',
@@ -1106,14 +1433,16 @@
         }
 
         const dot = l.prepStatus === 'READY' ? '🟢' : (l.prepStatus === 'PREPARING' ? '🟡' : '🔴');
+        const sessTitle = getLessonSessionText(stu, l).replace(/\n/g, ' ');
+        const mainContent = getLessonPrimaryContentText(stu, l).split('\n')[0] || 'Chưa có nội dung';
 
         return `
           <div onclick="selectStudent('${stu.id}'); openSplitPanel(${l.rowIndex}); toggleMobileSidebar(false);" class="p-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 border border-slate-800 cursor-pointer transition">
             <div class="flex justify-between items-center text-[11px] font-bold text-white gap-1">
               <span class="truncate">#${idx + 1} ${dot} ${escapeHtml(stu.name)}</span>
-              <span class="text-amber-400 shrink-0">${escapeHtml(l.buoi.replace(/\n/g, ' '))}</span>
+              <span class="text-amber-400 shrink-0">${escapeHtml(sessTitle)}</span>
             </div>
-            <div class="text-[11px] text-slate-300 truncate mt-0.5">${escapeHtml((l.noiDung || '').split('\n')[0] || 'Chưa có nội dung')}</div>
+            <div class="text-[11px] text-slate-300 truncate mt-0.5">${escapeHtml(mainContent)}</div>
             <div class="text-[10px] text-emerald-400 font-mono mt-1 flex items-center gap-1">
               <i class="fa-regular fa-clock"></i> ${timeDetail}
             </div>
@@ -1121,7 +1450,7 @@
       }).join('');
     }
 
-    // ==================== HIỂN THỊ MAIN WORKSPACE ====================
+    // ==================== HIỂN THỊ MAIN WORKSPACE (SỬA TÊN CỘT, ĐỔI CHỮ/TÍCH VUÔNG & XÓA CỘT NGAY TRÊN BẢNG) ====================
     function renderMainWorkspace() {
       const container = document.getElementById('mainContentArea');
       const stu = getActiveStudent();
@@ -1129,8 +1458,8 @@
       if (!stu) {
         container.innerHTML = `
           <div class="bg-white rounded-2xl border border-slate-200 p-10 text-center max-w-xl mx-auto mt-8 shadow-sm">
-            <h3 class="text-base font-bold text-slate-800 mb-2">Chưa có học viên nào trong tài khoản này</h3>
-            <p class="text-xs text-slate-500 mb-4">Bạn có thể bấm "+ Mở Lớp Mới" để thêm học viên hoặc đồng bộ từ tài khoản Gmail trên Cloud.</p>
+            <h3 class="text-base font-bold text-slate-800 mb-2">Chưa có lớp / học viên nào trong tài khoản này</h3>
+            <p class="text-xs text-slate-500 mb-4">Bạn có thể bấm "+ Mở Lớp Mới" để dùng mẫu mặc định hoặc tự thiết kế bảng cột như Excel.</p>
             <div class="flex justify-center gap-2 flex-wrap">
               <button onclick="openAddStudentModal()" class="px-4 py-2 rounded-xl bg-blue-600 text-white text-xs font-semibold">+ Mở Lớp Mới</button>
               <button onclick="pullAccountFromCloud(true)" class="px-4 py-2 rounded-xl bg-emerald-600 text-white text-xs font-semibold"><i class="fa-solid fa-cloud-arrow-down mr-1"></i> Tải Dữ Liệu Từ Tài Khoản Gmail</button>
@@ -1139,136 +1468,199 @@
         return;
       }
 
+      const cols = ensureStudentColumns(stu);
       const lessons = getFilteredLessons();
+
       if (lessons.length === 0) {
         container.innerHTML = `
           <div class="bg-white rounded-2xl border border-slate-200 p-12 text-center">
-            <p class="text-sm mb-3 text-slate-600">Không có buổi học nào trong bộ lọc này.</p>
-            <div class="flex justify-center gap-2">
-              <button onclick="syncFromGoogleSheet(true)" class="px-3.5 py-2 rounded-lg bg-emerald-600 text-white text-xs font-semibold">Đọc lại từ Sheet</button>
+            <p class="text-sm mb-3 text-slate-600">Không có buổi học nào trong mục này.</p>
+            <div class="flex justify-center gap-2 flex-wrap">
+              <button onclick="syncFromGoogleSheet(true)" class="px-3.5 py-2 rounded-lg bg-emerald-600 text-white text-xs font-semibold">Đọc dữ liệu từ Sheet</button>
               <button onclick="addSingleNewLesson()" class="px-3.5 py-2 rounded-lg bg-slate-800 text-white text-xs font-semibold">+ Thêm 1 buổi mới</button>
+              <button onclick="openColumnManagerModal()" class="px-3.5 py-2 rounded-lg bg-violet-600 text-white text-xs font-semibold"><i class="fa-solid fa-table-columns mr-1"></i> Thêm / Xóa Cột</button>
             </div>
           </div>`;
         return;
       }
 
+      // 1. DẠNG THẺ (CARDS)
       if (state.viewMode === 'CARDS') {
-        let cardsHtml = lessons.map(l => `
-          <div class="bg-white rounded-2xl border ${l.tienDo ? 'border-emerald-200 bg-emerald-50/20' : 'border-slate-200'} p-4 shadow-sm hover:shadow-md transition flex flex-col justify-between">
-            <div>
-              <div class="flex items-start justify-between gap-2 mb-2.5">
-                <div>
-                  <span class="font-bold text-sm text-blue-900">${escapeHtml(l.buoi.replace(/\n/g, ' '))}</span>
-                  <p class="text-[11px] text-slate-500 font-medium mt-0.5">${escapeHtml(l.giaiDoan)}</p>
+        const sessCol = getColumnByRole(stu, 'SESSION', 'buoi');
+        const stageCol = cols.find(c => c.role === 'STAGE');
+
+        let cardsHtml = lessons.map(l => {
+          const isDone = isLessonCompleted(stu, l);
+          const sessTitle = sessCol ? getLessonCellValue(l, sessCol) : l.buoi;
+          const stageTitle = stageCol ? getLessonCellValue(l, stageCol) : '';
+
+          const textFieldsHtml = cols
+            .filter(c => c.type === 'TEXT' && c.key !== sessCol?.key && c.key !== stageCol?.key)
+            .map(c => {
+              const val = getLessonCellValue(l, c);
+              return `
+                <div class="text-xs text-slate-800 whitespace-pre-line bg-slate-50 p-2.5 rounded-xl border border-slate-100 mb-2 leading-relaxed">
+                  <b class="text-slate-600 block mb-0.5 text-[11px] uppercase">${escapeHtml(c.title)}:</b>
+                  ${escapeHtml(val || '—')}
+                </div>`;
+            }).join('');
+
+          const checkboxFieldsHtml = cols
+            .filter(c => c.type === 'CHECKBOX')
+            .map(c => {
+              const checked = getLessonCellValue(l, c);
+              return `
+                <label class="flex items-center gap-1.5 font-semibold ${checked ? 'text-emerald-700' : 'text-slate-600'} cursor-pointer">
+                  <input type="checkbox" ${checked ? 'checked' : ''} onchange="inlineUpdate(${l.rowIndex}, '${c.key}', this.checked)" class="w-4 h-4 accent-emerald-600 rounded">
+                  ${escapeHtml(c.title)}
+                </label>`;
+            }).join('');
+
+          return `
+            <div class="bg-white rounded-2xl border ${isDone ? 'border-emerald-200 bg-emerald-50/20' : 'border-slate-200'} p-4 shadow-sm hover:shadow-md transition flex flex-col justify-between">
+              <div>
+                <div class="flex items-start justify-between gap-2 mb-2.5">
+                  <div>
+                    <span class="font-bold text-sm text-blue-900">${escapeHtml(String(sessTitle || '').replace(/\n/g, ' '))}</span>
+                    ${stageTitle ? `<p class="text-[11px] text-slate-500 font-medium mt-0.5">${escapeHtml(stageTitle)}</p>` : ''}
+                  </div>
+                  <div class="flex items-center gap-1.5">
+                    ${getPrepBadgeHtml(l.prepStatus)}
+                    <button onclick="openSplitPanel(${l.rowIndex})" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition">
+                      <i class="fa-solid fa-pen-to-square mr-1"></i> Soạn bài
+                    </button>
+                  </div>
                 </div>
-                <div class="flex items-center gap-1.5">
-                  ${getPrepBadgeHtml(l.prepStatus)}
-                  <button onclick="openSplitPanel(${l.rowIndex})" class="px-2.5 py-1 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition">
-                    <i class="fa-solid fa-pen-to-square mr-1"></i> Soạn bài
-                  </button>
-                </div>
+                ${textFieldsHtml}
+                ${l.script ? `<div class="text-xs text-blue-900 bg-blue-50 p-2.5 rounded-xl border border-blue-200 whitespace-pre-line mb-2"><b>📋 Kịch bản lên lớp:</b>\n${escapeHtml(l.script)}</div>` : ''}
               </div>
-
-              <div class="text-xs text-slate-800 whitespace-pre-line bg-slate-50 p-3 rounded-xl border border-slate-100 mb-2.5 leading-relaxed">${escapeHtml(l.noiDung || 'Chưa có nội dung')}</div>
-              
-              <div class="text-xs text-slate-700 whitespace-pre-line mb-2 bg-purple-50/50 p-2.5 rounded-xl border border-purple-100">
-                <b class="text-purple-900 block mb-1">📌 Bài tập về nhà:</b>
-                ${escapeHtml(l.btvn || 'Chưa giao BTVN')}
+              <div class="pt-3 mt-2 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-xs">
+                ${checkboxFieldsHtml}
               </div>
-
-              ${l.script ? `<div class="text-xs text-blue-900 bg-blue-50 p-2.5 rounded-xl border border-blue-200 whitespace-pre-line mb-2"><b>📋 Kịch bản lên lớp:</b>\n${escapeHtml(l.script)}</div>` : ''}
-              ${l.nhanXet ? `<div class="text-xs text-amber-900 bg-amber-50 p-2.5 rounded-xl border border-amber-200 whitespace-pre-line"><b>💬 Nhận xét:</b>\n${escapeHtml(l.nhanXet)}</div>` : ''}
-            </div>
-
-            <div class="pt-3 mt-3 border-t border-slate-200 flex items-center justify-between text-xs">
-              <label class="flex items-center gap-1.5 font-semibold ${l.tienDo ? 'text-emerald-700' : 'text-slate-600'} cursor-pointer">
-                <input type="checkbox" ${l.tienDo ? 'checked' : ''} onchange="inlineUpdate(${l.rowIndex}, 'tienDo', this.checked)" class="w-4 h-4 accent-emerald-600 rounded">
-                Đã dạy xong
-              </label>
-              <label class="flex items-center gap-1.5 font-semibold text-slate-600 cursor-pointer">
-                <input type="checkbox" ${l.hocPhi ? 'checked' : ''} onchange="inlineUpdate(${l.rowIndex}, 'hocPhi', this.checked)" class="w-4 h-4 accent-blue-600 rounded">
-                Học phí
-              </label>
-            </div>
-          </div>
-        `).join('');
+            </div>`;
+        }).join('');
 
         container.innerHTML = `
           <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">${cardsHtml}</div>
-          <div class="mt-4 flex justify-center gap-2">
+          <div class="mt-4 flex justify-center gap-2 flex-wrap">
             <button onclick="addSingleNewLesson()" class="px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-white text-xs font-semibold shadow">
               <i class="fa-solid fa-plus mr-1"></i> Thêm 1 buổi học mới (Buổi ${stu.lessons.length + 1})
             </button>
-            <button onclick="openAutoScheduleModal()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold shadow">
-              <i class="fa-solid fa-calendar-plus mr-1"></i> Cộng thêm nhiều buổi
+            <button onclick="openColumnManagerModal()" class="px-4 py-2 rounded-xl bg-violet-600 hover:bg-violet-700 text-white text-xs font-semibold shadow">
+              <i class="fa-solid fa-table-columns mr-1"></i> Thêm / Xóa Cột
             </button>
           </div>`;
         return;
       }
 
+      // 2. DẠNG BẢNG (GRID) - TIÊU ĐỀ CỘT CHO PHÉP SỬA TÊN, ĐỔI KIỂU CHỮ/TÍCH VUÔNG & XÓA CỘT TRỰC TIẾP
+      let headerColsHtml = '';
+      cols.forEach((col, colIdx) => {
+        const wStyle = col.width ? `style="width: ${col.width}; min-width: ${col.width};"` : '';
+        const typeBadge = col.type === 'CHECKBOX' ? '☑️ Tích' : '📝 Chữ';
+        headerColsHtml += `
+          <th class="resizable-th p-2.5 border-r border-slate-600 text-center group align-top" ${wStyle}>
+            <div class="flex flex-col items-center gap-1">
+              <!-- Tên cột sửa trực tiếp -->
+              <div contenteditable="true" onblur="inlineRenameColumnTitle(${colIdx}, this.innerText)" class="header-edit px-1.5 py-0.5 font-bold text-xs leading-tight cursor-text" title="Bấm vào để đổi tên cột">${escapeHtml(col.title)}</div>
+              <!-- Nút đổi kiểu Chữ ⇄ Tích vuông & Nút Xóa cột ngay trên Header -->
+              <div class="flex items-center justify-center gap-1 opacity-80 group-hover:opacity-100 transition">
+                <button onclick="inlineToggleColumnType(${colIdx})" class="px-1.5 py-0.5 rounded text-[10px] font-medium ${col.type === 'CHECKBOX' ? 'bg-emerald-700/80 hover:bg-emerald-600 text-emerald-100' : 'bg-slate-700 hover:bg-blue-600 text-slate-200'} transition" title="Bấm để chuyển cột này giữa kiểu Chữ (Văn bản) và Tích vuông (Checkbox)">
+                  ${typeBadge}
+                </button>
+                <button onclick="inlineDeleteColumnDirect(${colIdx})" class="px-1.5 py-0.5 rounded text-[10px] bg-slate-700/80 hover:bg-rose-600 text-slate-300 hover:text-white transition" title="Xóa cột này">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            </div>
+            <div class="col-resizer"></div>
+          </th>`;
+
+        if (colIdx === 0) {
+          headerColsHtml += `
+            <th class="resizable-th p-2.5 border-r border-slate-600 text-center w-28 align-middle">
+              Giáo án<div class="col-resizer"></div>
+            </th>`;
+        }
+      });
+
+      // Cột cuối cùng trên Header: Thêm nhanh cột Chữ hoặc cột Tích vuông
+      headerColsHtml += `
+        <th class="p-2 text-center w-28 bg-slate-800 align-middle">
+          <div class="flex flex-col gap-1">
+            <button onclick="quickAddColumnDirect('TEXT')" class="px-2 py-1 rounded bg-blue-600 hover:bg-blue-500 text-white text-[10px] font-semibold transition whitespace-nowrap" title="Thêm nhanh 1 cột Chữ văn bản">
+              + Cột Chữ 📝
+            </button>
+            <button onclick="quickAddColumnDirect('CHECKBOX')" class="px-2 py-1 rounded bg-emerald-600 hover:bg-emerald-500 text-white text-[10px] font-semibold transition whitespace-nowrap" title="Thêm nhanh 1 cột Tích vuông">
+              + Cột Tích ☑️
+            </button>
+          </div>
+        </th>`;
+
       let rowsHtml = lessons.map(l => {
         const isSelected = state.selectedRowIndex === l.rowIndex;
+        const isDone = isLessonCompleted(stu, l);
+        let cellsHtml = '';
+
+        cols.forEach((col, colIdx) => {
+          const val = getLessonCellValue(l, col);
+
+          if (col.type === 'CHECKBOX') {
+            cellsHtml += `
+              <td class="p-3 align-middle text-center border-r border-slate-200">
+                <input type="checkbox" ${val ? 'checked' : ''} onchange="inlineUpdate(${l.rowIndex}, '${col.key}', this.checked)" class="w-5 h-5 accent-slate-800 rounded cursor-pointer">
+              </td>`;
+          } else {
+            const isFirstCol = colIdx === 0;
+            const isContentRole = col.role === 'CONTENT';
+            cellsHtml += `
+              <td class="p-3 align-top ${isFirstCol ? 'text-center font-bold text-blue-900' : 'text-xs text-slate-800'} border-r border-slate-200">
+                <div contenteditable="true" onblur="inlineUpdate(${l.rowIndex}, '${col.key}', this.innerText)" class="inline-edit p-1 whitespace-pre-line leading-relaxed min-h-[24px]">${escapeHtml(val)}</div>
+                ${isFirstCol ? `<div class="mt-1.5">${getPrepBadgeHtml(l.prepStatus)}</div>` : ''}
+                ${isContentRole && l.script ? `<div onclick="openSplitPanel(${l.rowIndex})" class="mt-2 p-2 rounded-lg bg-blue-50 border border-blue-200 text-[11px] text-blue-900 cursor-pointer"><i class="fa-solid fa-clipboard-list mr-1"></i><b>Kịch bản:</b> ${escapeHtml(l.script)}</div>` : ''}
+              </td>`;
+          }
+
+          if (colIdx === 0) {
+            cellsHtml += `
+              <td class="p-3 align-middle text-center border-r border-slate-200">
+                <button onclick="openSplitPanel(${l.rowIndex})" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition inline-flex items-center gap-1.5 whitespace-nowrap">
+                  <i class="fa-solid fa-pen-to-square"></i> Soạn bài
+                </button>
+              </td>`;
+          }
+        });
+
+        cellsHtml += `
+          <td class="p-2 align-middle text-center">
+            <button onclick="deleteSingleLessonRow(${l.rowIndex})" class="text-slate-300 hover:text-rose-600 p-1 transition" title="Xóa dòng buổi học này">
+              <i class="fa-solid fa-xmark"></i>
+            </button>
+          </td>`;
+
         return `
-          <tr class="border-b border-slate-200 hover:bg-blue-50/40 ${l.tienDo ? 'bg-slate-50/70' : 'bg-white'} ${isSelected ? 'ring-2 ring-inset ring-blue-500 bg-blue-50/50' : ''}">
-            <td class="p-3 align-top text-center font-bold text-blue-900 border-r border-slate-200">
-              <div contenteditable="true" onblur="inlineUpdate(${l.rowIndex}, 'buoi', this.innerText)" class="inline-edit p-1 whitespace-pre-line">${escapeHtml(l.buoi)}</div>
-              <div class="mt-1.5">${getPrepBadgeHtml(l.prepStatus)}</div>
-            </td>
-
-            <td class="p-3 align-middle text-center border-r border-slate-200">
-              <button onclick="openSplitPanel(${l.rowIndex})" class="px-3 py-1.5 rounded-lg bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold shadow-sm transition inline-flex items-center gap-1.5">
-                <i class="fa-solid fa-pen-to-square"></i> Soạn bài
-              </button>
-            </td>
-
-            <td class="p-3 align-top text-xs border-r border-slate-200">
-              <div contenteditable="true" onblur="inlineUpdate(${l.rowIndex}, 'giaiDoan', this.innerText)" class="inline-edit p-1 font-medium">${escapeHtml(l.giaiDoan)}</div>
-            </td>
-
-            <td class="p-3 align-top text-xs border-r border-slate-200">
-              <div contenteditable="true" onblur="inlineUpdate(${l.rowIndex}, 'noiDung', this.innerText)" class="inline-edit p-1 whitespace-pre-line leading-relaxed">${escapeHtml(l.noiDung)}</div>
-              ${l.script ? `<div onclick="openSplitPanel(${l.rowIndex})" class="mt-2 p-2 rounded-lg bg-blue-50 border border-blue-200 text-[11px] text-blue-900 cursor-pointer"><i class="fa-solid fa-clipboard-list mr-1"></i><b>Kịch bản:</b> ${escapeHtml(l.script)}</div>` : ''}
-            </td>
-
-            <td class="p-3 align-top text-xs border-r border-slate-200">
-              <div contenteditable="true" onblur="inlineUpdate(${l.rowIndex}, 'btvn', this.innerText)" class="inline-edit p-1 whitespace-pre-line leading-relaxed">${escapeHtml(l.btvn)}</div>
-            </td>
-
-            <td class="p-3 align-middle text-center border-r border-slate-200">
-              <input type="checkbox" ${l.tienDo ? 'checked' : ''} onchange="inlineUpdate(${l.rowIndex}, 'tienDo', this.checked)" class="w-5 h-5 accent-slate-800 rounded cursor-pointer">
-            </td>
-
-            <td class="p-3 align-top text-xs border-r border-slate-200">
-              <div contenteditable="true" onblur="inlineUpdate(${l.rowIndex}, 'nhanXet', this.innerText)" class="inline-edit p-1 whitespace-pre-line leading-relaxed">${escapeHtml(l.nhanXet)}</div>
-            </td>
-
-            <td class="p-3 align-middle text-center">
-              <input type="checkbox" ${l.hocPhi ? 'checked' : ''} onchange="inlineUpdate(${l.rowIndex}, 'hocPhi', this.checked)" class="w-5 h-5 accent-blue-600 rounded cursor-pointer" title="Cột G: Học phí">
-            </td>
+          <tr class="border-b border-slate-200 hover:bg-blue-50/40 ${isDone ? 'bg-slate-50/70' : 'bg-white'} ${isSelected ? 'ring-2 ring-inset ring-blue-500 bg-blue-50/50' : ''}">
+            ${cellsHtml}
           </tr>`;
       }).join('');
 
       container.innerHTML = `
         <div class="bg-white rounded-xl shadow-sm border border-slate-300 overflow-x-auto">
-          <table id="lessonGridTable" class="w-full border-collapse text-left min-w-[900px]">
+          <table id="lessonGridTable" class="w-full border-collapse text-left min-w-[750px]">
             <thead>
               <tr class="bg-[#1b365d] text-white text-xs font-bold">
-                <th class="resizable-th p-3 border-r border-slate-600 text-center w-28">Buổi (A)<div class="col-resizer"></div></th>
-                <th class="resizable-th p-3 border-r border-slate-600 text-center w-28">Giáo án<div class="col-resizer"></div></th>
-                <th class="resizable-th p-3 border-r border-slate-600 text-center w-40">Giai đoạn (B)<div class="col-resizer"></div></th>
-                <th class="resizable-th p-3 border-r border-slate-600 text-center w-80">Nội dung bài học (C)<div class="col-resizer"></div></th>
-                <th class="resizable-th p-3 border-r border-slate-600 text-center w-64">BTVN (D)<div class="col-resizer"></div></th>
-                <th class="resizable-th p-3 border-r border-slate-600 text-center w-20">Tiến độ (E)<div class="col-resizer"></div></th>
-                <th class="resizable-th p-3 border-r border-slate-600 text-center w-64">Nhận xét (F)<div class="col-resizer"></div></th>
-                <th class="p-3 text-center w-20">Học phí (G)</th>
+                ${headerColsHtml}
               </tr>
             </thead>
             <tbody>${rowsHtml}</tbody>
           </table>
         </div>
         <div class="mt-3 flex flex-wrap justify-between items-center gap-2 text-xs text-slate-500">
-          <span>💡 <b>Mẹo:</b> Kéo thanh xám có dấu <b>⋮</b> ở giữa cột trái và bảng Sheet để mở rộng/thu hẹp tùy ý.</span>
-          <div class="flex gap-2">
+          <span>💡 <b>Mẹo:</b> Bấm trực tiếp vào tên cột để đổi tên, bấm <b>"📝 Chữ / ☑️ Tích"</b> dưới tên cột để đổi kiểu dữ liệu, hoặc bấm <b>"+ Cột Chữ / + Cột Tích"</b> ở góc phải bảng để thêm cột mới.</span>
+          <div class="flex gap-2 flex-wrap">
+            <button onclick="openColumnManagerModal()" class="px-3.5 py-2 rounded-lg bg-violet-600 hover:bg-violet-700 text-white font-semibold">
+              <i class="fa-solid fa-table-columns mr-1"></i> Quản lý Cột
+            </button>
             <button onclick="addSingleNewLesson()" class="px-3.5 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-semibold">
               <i class="fa-solid fa-plus mr-1"></i> Thêm 1 buổi tiếp theo (Buổi ${stu.lessons.length + 1})
             </button>
@@ -1344,20 +1736,28 @@
     }
 
     function initTableColumnResizers() {
+      const stu = getActiveStudent();
       const ths = document.querySelectorAll('#lessonGridTable th.resizable-th');
-      ths.forEach(th => {
+      ths.forEach((th, domIdx) => {
         const resizer = th.querySelector('.col-resizer');
         if (!resizer) return;
         let startX = 0, startW = 0;
 
         const onMouseMove = (e) => {
-          const newW = Math.max(60, startW + (e.clientX - startX));
+          const newW = Math.max(70, startW + (e.clientX - startX));
           th.style.width = newW + 'px';
           th.style.minWidth = newW + 'px';
+          if (stu && stu.columns) {
+            const colIdx = domIdx === 0 ? 0 : (domIdx >= 2 ? domIdx - 1 : -1);
+            if (colIdx >= 0 && stu.columns[colIdx]) {
+              stu.columns[colIdx].width = newW + 'px';
+            }
+          }
         };
         const onMouseUp = () => {
           document.removeEventListener('mousemove', onMouseMove);
           document.removeEventListener('mouseup', onMouseUp);
+          saveToLocal();
         };
         resizer.addEventListener('mousedown', (e) => {
           e.stopPropagation();
@@ -1381,7 +1781,7 @@
       }
     }
 
-    // ==================== ĐỒNG BỘ GOOGLE SHEETS (1 LỚP & TẤT CẢ CÁC LỚP) ====================
+    // ==================== ĐỒNG BỘ GOOGLE SHEETS (HỖ TRỢ ĐỌC CẢ MẪU 7 CỘT LẪN BỐ CỤC SHEET TÙY Ý CỦA KHÁCH) ====================
     function parseGoogleSheetUrl(url) {
       if (!url) return null;
       const idMatch = url.match(/\/spreadsheets\/d\/([a-zA-Z0-9-_]+)/);
@@ -1390,7 +1790,7 @@
       return { spreadsheetId: idMatch[1], gid: gidMatch ? gidMatch[1] : '0' };
     }
 
-    function fetchSheetDataDirectGviz(spreadsheetId, gid) {
+    function fetchSheetDataDynamicGviz(spreadsheetId, gid) {
       return new Promise((resolve, reject) => {
         const cbName = 'gvizCallback_' + Date.now() + '_' + Math.floor(Math.random() * 100000);
         const script = document.createElement('script');
@@ -1406,72 +1806,171 @@
           cleanup();
           if (!response || response.status === 'error') { reject(new Error('Error')); return; }
           const table = response.table;
-          if (!table || !table.rows) { resolve([]); return; }
+          if (!table || !table.rows) { resolve({ detectedColumns: [], rawRows: [] }); return; }
 
-          let currentGiaiDoan = '';
-          const parsedRows = [];
+          const colsMeta = table.cols || [];
+          const rows = table.rows || [];
 
-          table.rows.forEach((r) => {
-            const cells = r.c || [];
-            const getStr = (colIdx) => {
-              const cell = cells[colIdx];
+          let headerLabels = colsMeta.map(c => (c && c.label ? String(c.label).trim() : ''));
+          let startRowIdx = 0;
+
+          if (headerLabels.every(h => !h) && rows.length > 0) {
+            const firstRowCells = rows[0].c || [];
+            headerLabels = firstRowCells.map(cell => {
               if (!cell) return '';
-              if (cell.f !== undefined && cell.f !== null) return String(cell.f);
-              if (cell.v !== undefined && cell.v !== null) return String(cell.v);
-              return '';
-            };
-            const getBool = (colIdx) => {
-              const cell = cells[colIdx];
-              if (!cell || cell.v === null || cell.v === undefined) return false;
-              if (typeof cell.v === 'boolean') return cell.v;
-              const s = String(cell.v).trim().toUpperCase();
-              return s === 'TRUE' || s === '1' || s === '✓' || s === 'X';
-            };
-
-            const buoi = getStr(0).trim();
-            const rawGiaiDoan = getStr(1).trim();
-            const noiDung = getStr(2).trim();
-            const btvn = getStr(3).trim();
-            const tienDo = getBool(4);
-            const nhanXet = getStr(5).trim();
-            const hocPhi = getBool(6);
-
-            if (buoi.toLowerCase() === 'buổi' && rawGiaiDoan.toLowerCase() === 'giai đoạn') return;
-            if (!buoi && !noiDung && !btvn && !nhanXet) return;
-            if (rawGiaiDoan) currentGiaiDoan = rawGiaiDoan;
-
-            parsedRows.push({
-              rowIndex: parsedRows.length + 2,
-              buoi: buoi || `Buổi ${parsedRows.length + 1}`,
-              giaiDoan: currentGiaiDoan,
-              noiDung, btvn, tienDo, nhanXet, hocPhi
+              return String(cell.f !== undefined && cell.f !== null ? cell.f : (cell.v || '')).trim();
             });
+            startRowIdx = 1;
+          }
+
+          let maxColCount = headerLabels.length;
+          rows.forEach(r => {
+            if (r.c && r.c.length > maxColCount) maxColCount = r.c.length;
           });
-          resolve(parsedRows);
+          maxColCount = Math.min(Math.max(maxColCount, 1), 20);
+
+          const dataRows = rows.slice(startRowIdx);
+          const default7Keys = ['buoi', 'giaiDoan', 'noiDung', 'btvn', 'tienDo', 'nhanXet', 'hocPhi'];
+          const detectedColumns = [];
+
+          for (let cIdx = 0; cIdx < maxColCount; cIdx++) {
+            const rawHeader = headerLabels[cIdx] || '';
+            let boolCount = 0, nonEmptyCount = 0;
+            dataRows.forEach(r => {
+              const cell = r.c ? r.c[cIdx] : null;
+              if (cell && cell.v !== null && cell.v !== undefined && String(cell.v).trim() !== '') {
+                nonEmptyCount++;
+                const s = String(cell.v).trim().toUpperCase();
+                if (typeof cell.v === 'boolean' || s === 'TRUE' || s === 'FALSE' || s === '✓') {
+                  boolCount++;
+                }
+              }
+            });
+
+            const isCheckbox = (colsMeta[cIdx] && colsMeta[cIdx].type === 'boolean') || (nonEmptyCount > 0 && boolCount === nonEmptyCount);
+            const key = cIdx < 7 ? default7Keys[cIdx] : `col_${cIdx + 1}`;
+            const title = rawHeader || `Cột ${cIdx + 1}`;
+
+            let role = 'NONE';
+            const lowerTitle = title.toLowerCase();
+            if (cIdx === 0 || lowerTitle.includes('buổi') || lowerTitle.includes('ngày') || lowerTitle.includes('date')) role = 'SESSION';
+            else if (isCheckbox && (cIdx === 4 || lowerTitle.includes('tiến độ') || lowerTitle.includes('đã dạy') || lowerTitle.includes('done'))) role = 'PROGRESS';
+            else if (cIdx === 2 || lowerTitle.includes('nội dung') || lowerTitle.includes('bài học')) role = 'CONTENT';
+            else if (cIdx === 1 || lowerTitle.includes('giai đoạn')) role = 'STAGE';
+
+            detectedColumns.push({
+              key,
+              title,
+              type: isCheckbox ? 'CHECKBOX' : 'TEXT',
+              role,
+              width: isCheckbox ? '100px' : (cIdx === 0 ? '120px' : '220px')
+            });
+          }
+
+          while (detectedColumns.length > 1) {
+            const lastIdx = detectedColumns.length - 1;
+            const hasHeader = headerLabels[lastIdx] && headerLabels[lastIdx].trim() !== '';
+            const hasAnyVal = dataRows.some(r => r.c && r.c[lastIdx] && r.c[lastIdx].v !== null && r.c[lastIdx].v !== undefined && String(r.c[lastIdx].v).trim() !== '');
+            if (!hasHeader && !hasAnyVal) {
+              detectedColumns.pop();
+            } else {
+              break;
+            }
+          }
+
+          const CarryForwardStageCol = detectedColumns.find(c => c.role === 'STAGE');
+          let currentStageVal = '';
+          const parsedLessons = [];
+
+          dataRows.forEach((r) => {
+            const cells = r.c || [];
+            let hasContentInRow = false;
+            const rowObj = {};
+
+            detectedColumns.forEach((col, cIdx) => {
+              const cell = cells[cIdx];
+              if (col.type === 'CHECKBOX') {
+                let bVal = false;
+                if (cell && cell.v !== null && cell.v !== undefined) {
+                  if (typeof cell.v === 'boolean') bVal = cell.v;
+                  else {
+                    const s = String(cell.v).trim().toUpperCase();
+                    bVal = (s === 'TRUE' || s === '1' || s === '✓' || s === 'X');
+                  }
+                }
+                rowObj[col.key] = bVal;
+              } else {
+                let sVal = '';
+                if (cell) {
+                  if (cell.f !== undefined && cell.f !== null) sVal = String(cell.f).trim();
+                  else if (cell.v !== undefined && cell.v !== null) sVal = String(cell.v).trim();
+                }
+                if (sVal !== '') hasContentInRow = true;
+                rowObj[col.key] = sVal;
+              }
+            });
+
+            const firstKey = detectedColumns[0]?.key;
+            if (firstKey && String(rowObj[firstKey] || '').toLowerCase() === 'buổi') return;
+            if (!hasContentInRow) return;
+
+            if (CarryForwardStageCol) {
+              if (rowObj[CarryForwardStageCol.key]) {
+                currentStageVal = rowObj[CarryForwardStageCol.key];
+              } else {
+                rowObj[CarryForwardStageCol.key] = currentStageVal;
+              }
+            }
+
+            rowObj.rowIndex = parsedLessons.length + 2;
+            parsedLessons.push(rowObj);
+          });
+
+          resolve({ detectedColumns, rawRows: parsedLessons });
         };
 
         script.onerror = () => { cleanup(); reject(new Error('Error')); };
-        script.src = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?gid=${gid}&headers=1&tqx=out:json;responseHandler:${cbName}`;
+        script.src = `https://docs.google.com/spreadsheets/d/${spreadsheetId}/gviz/tq?gid=${gid}&tqx=out:json;responseHandler:${cbName}`;
         document.body.appendChild(script);
       });
     }
 
-    async function syncSingleStudentObject(stu) {
+    async function syncSingleStudentObject(stu, adoptSheetColumns = false) {
       if (!stu || !stu.sheetUrl) return false;
       const parsedUrl = parseGoogleSheetUrl(stu.sheetUrl);
       if (!parsedUrl) return false;
 
+      ensureStudentColumns(stu);
+
       const oldMetaMap = {};
       (stu.lessons || []).forEach(l => {
-        oldMetaMap[l.rowIndex] = {
-          startTime: l.startTime || '',
-          prepReminderMins: l.prepReminderMins || 45,
-          prepStatus: l.prepStatus,
-          script: l.script || ''
-        };
+        oldMetaMap[l.rowIndex] = { ...l };
       });
 
-      let fetchedRows = null;
+      try {
+        const gvizData = await fetchSheetDataDynamicGviz(parsedUrl.spreadsheetId, parsedUrl.gid);
+        if (gvizData && Array.isArray(gvizData.rawRows)) {
+          if (adoptSheetColumns && gvizData.detectedColumns && gvizData.detectedColumns.length > 0) {
+            stu.columns = gvizData.detectedColumns;
+          }
+
+          stu.lessons = gvizData.rawRows.map(r => {
+            const oldRow = oldMetaMap[r.rowIndex] || {};
+            const merged = {
+              ...oldRow,
+              ...r,
+              rowIndex: r.rowIndex,
+              startTime: oldRow.startTime || '',
+              prepReminderMins: oldRow.prepReminderMins || 45,
+              script: oldRow.script || ''
+            };
+            const done = isLessonCompleted(stu, merged);
+            merged.prepStatus = done ? 'READY' : (oldRow.prepStatus || 'UNPREPARED');
+            return merged;
+          });
+          return true;
+        }
+      } catch (e) {}
 
       if (state.gasWebhookUrl) {
         try {
@@ -1480,39 +1979,31 @@
             sheetUrl: stu.sheetUrl,
             gid: parsedUrl.gid
           });
-          if (data && Array.isArray(data.rows)) fetchedRows = data.rows;
+          if (data && Array.isArray(data.rows)) {
+            stu.lessons = data.rows.map(r => {
+              const oldRow = oldMetaMap[r.rowIndex] || {};
+              const isDone = r.tienDo === true || String(r.tienDo).toUpperCase() === 'TRUE';
+              return {
+                ...oldRow,
+                rowIndex: r.rowIndex,
+                buoi: r.buoi || '',
+                giaiDoan: r.giaiDoan || '',
+                noiDung: r.noiDung || '',
+                btvn: r.btvn || '',
+                tienDo: isDone,
+                nhanXet: r.nhanXet || '',
+                hocPhi: r.hocPhi === true || String(r.hocPhi).toUpperCase() === 'TRUE',
+                startTime: oldRow.startTime || '',
+                prepReminderMins: oldRow.prepReminderMins || 45,
+                prepStatus: isDone ? 'READY' : (oldRow.prepStatus || 'UNPREPARED'),
+                script: oldRow.script || ''
+              };
+            });
+            return true;
+          }
         } catch (e) {}
       }
 
-      if (!fetchedRows) {
-        try {
-          fetchedRows = await fetchSheetDataDirectGviz(parsedUrl.spreadsheetId, parsedUrl.gid);
-        } catch (e) {
-          return false;
-        }
-      }
-
-      if (fetchedRows) {
-        stu.lessons = fetchedRows.map(r => {
-          const isDone = r.tienDo === true || String(r.tienDo).toUpperCase() === 'TRUE';
-          const oldMeta = oldMetaMap[r.rowIndex] || {};
-          return {
-            rowIndex: r.rowIndex,
-            buoi: r.buoi || '',
-            giaiDoan: r.giaiDoan || '',
-            noiDung: r.noiDung || '',
-            btvn: r.btvn || '',
-            tienDo: isDone,
-            nhanXet: r.nhanXet || '',
-            hocPhi: r.hocPhi === true || String(r.hocPhi).toUpperCase() === 'TRUE',
-            startTime: oldMeta.startTime || '',
-            prepReminderMins: oldMeta.prepReminderMins || 45,
-            prepStatus: isDone ? 'READY' : (oldMeta.prepStatus || 'UNPREPARED'),
-            script: oldMeta.script || ''
-          };
-        });
-        return true;
-      }
       return false;
     }
 
@@ -1520,15 +2011,15 @@
       const stu = getActiveStudent();
       if (!stu) return;
       setSyncBadge('SYNCING');
-      const ok = await syncSingleStudentObject(stu);
+      const ok = await syncSingleStudentObject(stu, false);
       if (ok) {
         saveToLocal();
         renderAll();
         setSyncBadge('SAVED');
-        if (showAlertOnSuccess) alert(`✅ Đã đồng bộ thành công ${stu.lessons.length} buổi của ${stu.name}!`);
+        if (showAlertOnSuccess) alert(`✅ Đã đồng bộ thành công ${stu.lessons.length} buổi học từ Google Sheets!`);
       } else {
         setSyncBadge('ERROR');
-        if (showAlertOnSuccess) alert('⚠️ Không thể đọc file Sheet. Hãy kiểm tra quyền chia sẻ file Google Sheet!');
+        if (showAlertOnSuccess) alert('⚠️ Không thể đọc file Sheet. Hãy bật chia sẻ "Bất kỳ ai có liên kết" cho file Google Sheets!');
       }
     }
 
@@ -1536,12 +2027,22 @@
       if (state.students.length === 0) return;
       setSyncBadge('SYNCING');
       for (const stu of state.students) {
-        await syncSingleStudentObject(stu);
+        await syncSingleStudentObject(stu, false);
       }
       saveToLocal();
       renderAll();
       setSyncBadge('SAVED');
-      if (showAlert) alert(`✅ Đã cập nhật lịch học từ toàn bộ ${state.students.length} học viên!`);
+      if (showAlert) alert(`✅ Đã cập nhật lịch học từ toàn bộ ${state.students.length} lớp học!`);
+    }
+
+    function buildRowDataArrayForSheet(student, lesson) {
+      const cols = ensureStudentColumns(student);
+      const arr = cols.map(c => {
+        const val = getLessonCellValue(lesson, c);
+        return c.type === 'CHECKBOX' ? !!val : String(val || '');
+      });
+      while (arr.length < 7) arr.push('');
+      return arr;
     }
 
     async function pushAllWebToGoogleSheet() {
@@ -1560,7 +2061,7 @@
       try {
         const allRows = stu.lessons.map(l => ({
           rowIndex: l.rowIndex,
-          rowData: [l.buoi || '', l.giaiDoan || '', l.noiDung || '', l.btvn || '', !!l.tienDo, l.nhanXet || '', !!l.hocPhi]
+          rowData: buildRowDataArrayForSheet(stu, l)
         }));
 
         await fetch(state.gasWebhookUrl, {
@@ -1587,17 +2088,17 @@
           body: JSON.stringify({
             action: 'updateRow', sheetUrl: student.sheetUrl, gid: parsedUrl ? parsedUrl.gid : '0',
             rowIndex: lesson.rowIndex,
-            rowData: [lesson.buoi, lesson.giaiDoan, lesson.noiDung, lesson.btvn, lesson.tienDo, lesson.nhanXet, lesson.hocPhi]
+            rowData: buildRowDataArrayForSheet(student, lesson)
           })
         });
       } catch (e) {}
     }
 
-    // ==================== QUẢN LÝ HỌC VIÊN ====================
+    // ==================== QUẢN LÝ HỌC VIÊN & HIỂN THỊ HEADER (DOCS TÙY CHỌN) ====================
     function deleteStudent(studentId, event) {
       if (event) event.stopPropagation();
       const stu = state.students.find(s => s.id === studentId);
-      if (!stu || !confirm(`Xóa học viên "${stu.name}"?`)) return;
+      if (!stu || !confirm(`Xóa lớp / học viên "${stu.name}"?`)) return;
       state.students = state.students.filter(s => s.id !== studentId);
       if (state.activeStudentId === studentId) { state.activeStudentId = state.students[0]?.id || null; closeSplitPanel(); }
       saveToLocal(); renderAll();
@@ -1611,8 +2112,8 @@
       document.getElementById('editStudentName').value = stu.name || '';
       document.getElementById('editStudentTime24').value = stu.defaultTime || '19:30';
       document.getElementById('editStudentSheetUrl').value = stu.sheetUrl || '';
-      document.getElementById('editStudentDocsUrl').value = stu.docsUrl !== '#' ? stu.docsUrl : '';
-      document.getElementById('editStudentHwDocsUrl').value = stu.hwDocsUrl !== '#' ? stu.hwDocsUrl : '';
+      document.getElementById('editStudentDocsUrl').value = hasValidOptionalUrl(stu.docsUrl) ? stu.docsUrl : '';
+      document.getElementById('editStudentHwDocsUrl').value = hasValidOptionalUrl(stu.hwDocsUrl) ? stu.hwDocsUrl : '';
       document.getElementById('editLinksModal').classList.remove('hidden');
     }
     function closeEditLinksModal() { document.getElementById('editLinksModal').classList.add('hidden'); }
@@ -1623,10 +2124,9 @@
       stu.name = document.getElementById('editStudentName').value.trim();
       stu.defaultTime = document.getElementById('editStudentTime24').value || '19:30';
       stu.sheetUrl = document.getElementById('editStudentSheetUrl').value.trim();
-      stu.docsUrl = document.getElementById('editStudentDocsUrl').value.trim() || '#';
-      stu.hwDocsUrl = document.getElementById('editStudentHwDocsUrl').value.trim() || '#';
+      stu.docsUrl = document.getElementById('editStudentDocsUrl').value.trim() || '';
+      stu.hwDocsUrl = document.getElementById('editStudentHwDocsUrl').value.trim() || '';
       saveToLocal(); closeEditLinksModal(); renderAll();
-      await syncFromGoogleSheet(true);
     }
 
     function renderAll() {
@@ -1635,10 +2135,10 @@
 
     function renderStudentSidebar() {
       const container = document.getElementById('studentList');
-      container.innerHTML = state.students.length === 0 ? `<div class="text-xs text-slate-400 italic p-4 text-center border border-dashed border-slate-700 rounded-xl">Chưa có học viên.</div>` : '';
+      container.innerHTML = state.students.length === 0 ? `<div class="text-xs text-slate-400 italic p-4 text-center border border-dashed border-slate-700 rounded-xl">Chưa có lớp học nào.</div>` : '';
       state.students.forEach(stu => {
         const isActive = stu.id === state.activeStudentId;
-        const done = (stu.lessons || []).filter(l => l.tienDo).length;
+        const done = (stu.lessons || []).filter(l => isLessonCompleted(stu, l)).length;
         container.innerHTML += `
           <div onclick="selectStudent('${stu.id}'); toggleMobileSidebar(false);" class="group p-2.5 rounded-xl cursor-pointer transition flex items-center justify-between ${isActive ? 'bg-blue-600 text-white shadow-md' : 'text-slate-300 hover:bg-slate-800'}">
             <div class="truncate pr-2">
@@ -1668,16 +2168,35 @@
       document.getElementById('currentStudentName').innerText = stu.name;
       const dayNames = {1:'T2', 2:'T3', 3:'T4', 4:'T5', 5:'T6', 6:'T7', 0:'CN'};
       const daysText = (stu.daysOfWeek || []).map(d => dayNames[d] || `T${d}`).join(', ');
-      document.getElementById('currentStudentSchedule').innerText = `Lịch: ${daysText || 'Linh hoạt'} lúc ${stu.defaultTime || '19:30'} (24h) • Tổng ${stu.lessons.length} buổi`;
+      const colCount = ensureStudentColumns(stu).length;
+      document.getElementById('currentStudentSchedule').innerText = `Lịch: ${daysText || 'Linh hoạt'} lúc ${stu.defaultTime || '19:30'} (24h) • Tổng ${stu.lessons.length} buổi • ${colCount} cột dữ liệu`;
 
       document.getElementById('headerSheetBtn').href = stu.sheetUrl || '#';
-      document.getElementById('headerDocsBtn').href = stu.docsUrl || '#';
-      document.getElementById('headerHwDocsBtn').href = stu.hwDocsUrl || '#';
+
+      const docsBtn = document.getElementById('headerDocsBtn');
+      if (hasValidOptionalUrl(stu.docsUrl)) {
+        docsBtn.href = stu.docsUrl;
+        docsBtn.classList.remove('hidden');
+        docsBtn.classList.add('inline-flex');
+      } else {
+        docsBtn.classList.add('hidden');
+        docsBtn.classList.remove('inline-flex');
+      }
+
+      const hwBtn = document.getElementById('headerHwDocsBtn');
+      if (hasValidOptionalUrl(stu.hwDocsUrl)) {
+        hwBtn.href = stu.hwDocsUrl;
+        hwBtn.classList.remove('hidden');
+        hwBtn.classList.add('inline-flex');
+      } else {
+        hwBtn.classList.add('hidden');
+        hwBtn.classList.remove('inline-flex');
+      }
 
       document.getElementById('count-ALL').innerText = stu.lessons.length;
-      document.getElementById('count-UPCOMING').innerText = stu.lessons.filter(l => !l.tienDo).length;
-      document.getElementById('count-UNPREPARED').innerText = stu.lessons.filter(l => !l.tienDo && l.prepStatus !== 'READY').length;
-      document.getElementById('count-COMPLETED').innerText = stu.lessons.filter(l => l.tienDo).length;
+      document.getElementById('count-UPCOMING').innerText = stu.lessons.filter(l => !isLessonCompleted(stu, l)).length;
+      document.getElementById('count-UNPREPARED').innerText = stu.lessons.filter(l => !isLessonCompleted(stu, l) && l.prepStatus !== 'READY').length;
+      document.getElementById('count-COMPLETED').innerText = stu.lessons.filter(l => isLessonCompleted(stu, l)).length;
 
       ['ALL', 'UPCOMING', 'UNPREPARED', 'COMPLETED'].forEach(f => {
         document.getElementById(`filter-${f}`).className = state.filter === f
@@ -1697,9 +2216,10 @@
       const stu = getActiveStudent();
       if (!stu) return [];
       return stu.lessons.filter(l => {
-        if (state.filter === 'UPCOMING') return !l.tienDo;
-        if (state.filter === 'UNPREPARED') return !l.tienDo && l.prepStatus !== 'READY';
-        if (state.filter === 'COMPLETED') return l.tienDo;
+        const done = isLessonCompleted(stu, l);
+        if (state.filter === 'UPCOMING') return !done;
+        if (state.filter === 'UNPREPARED') return !done && l.prepStatus !== 'READY';
+        if (state.filter === 'COMPLETED') return done;
         return true;
       });
     }
@@ -1710,18 +2230,27 @@
       return `<span class="px-2 py-0.5 rounded-full text-[11px] font-semibold bg-rose-100 text-rose-800">🔴 Chưa soạn</span>`;
     }
 
-    function inlineUpdate(rowIndex, field, value) {
+    function inlineUpdate(rowIndex, fieldKey, value) {
       const stu = getActiveStudent();
       if (!stu) return;
       const lesson = stu.lessons.find(l => l.rowIndex === rowIndex);
       if (!lesson) return;
-      lesson[field] = value;
-      if (field === 'tienDo' && value === true) lesson.prepStatus = 'READY';
+      lesson[fieldKey] = value;
+
+      const progCol = getColumnByRole(stu, 'PROGRESS', 'tienDo');
+      if ((fieldKey === 'tienDo' || fieldKey === progCol?.key) && value === true) {
+        lesson.prepStatus = 'READY';
+      }
       saveToLocal();
       pushUpdateToGoogleSheet(stu, lesson);
-      renderAll();
+      renderHeaderAndCounts();
+      renderPrepReminders();
+      if (state.selectedRowIndex === rowIndex) {
+        renderSplitPanelDynamicFields(stu, lesson);
+      }
     }
 
+    // ==================== SPLIT-VIEW PANEL ĐỘNG THEO CỘT TÙY CHỈNH ====================
     function openSplitPanel(rowIndex) {
       const stu = getActiveStudent();
       const lesson = stu?.lessons.find(l => l.rowIndex === rowIndex);
@@ -1730,10 +2259,25 @@
       document.getElementById('splitViewPanel').classList.remove('hidden');
       document.getElementById('rightGutter').classList.remove('hidden');
       document.getElementById('rightGutter').classList.add('md:flex');
-      document.getElementById('panelQuickDocsLink').href = stu.docsUrl || '#';
-      document.getElementById('panelQuickHwDocsLink').href = stu.hwDocsUrl || '#';
+
+      const qDocs = document.getElementById('panelQuickDocsLink');
+      if (hasValidOptionalUrl(stu.docsUrl)) {
+        qDocs.href = stu.docsUrl;
+        qDocs.classList.remove('hidden');
+      } else {
+        qDocs.classList.add('hidden');
+      }
+
+      const qHw = document.getElementById('panelQuickHwDocsLink');
+      if (hasValidOptionalUrl(stu.hwDocsUrl)) {
+        qHw.href = stu.hwDocsUrl;
+        qHw.classList.remove('hidden');
+      } else {
+        qHw.classList.add('hidden');
+      }
       
-      document.getElementById('panelLessonBadge').innerText = `Dòng ${lesson.rowIndex} • ${lesson.buoi.replace(/\n/g, ' ')}`;
+      const sessTitle = getLessonSessionText(stu, lesson).replace(/\n/g, ' ');
+      document.getElementById('panelLessonBadge').innerText = `Dòng ${lesson.rowIndex} • ${sessTitle}`;
       document.getElementById('panelPrepStatus').value = lesson.prepStatus || 'UNPREPARED';
 
       let datePart = '', timePart = stu.defaultTime || '19:30';
@@ -1745,16 +2289,46 @@
       document.getElementById('panelStartDate').value = datePart;
       document.getElementById('panelStartHour24').value = timePart;
       document.getElementById('panelReminderMins').value = lesson.prepReminderMins || 45;
-
       document.getElementById('panelScript').value = lesson.script || '';
-      document.getElementById('panelBuoi').value = lesson.buoi || '';
-      document.getElementById('panelGiaiDoan').value = lesson.giaiDoan || '';
-      document.getElementById('panelNoiDung').value = lesson.noiDung || '';
-      document.getElementById('panelBtvn').value = lesson.btvn || '';
-      document.getElementById('panelNhanXet').value = lesson.nhanXet || '';
-      document.getElementById('panelTienDo').checked = !!lesson.tienDo;
-      document.getElementById('panelHocPhi').checked = !!lesson.hocPhi;
+
+      renderSplitPanelDynamicFields(stu, lesson);
       renderMainWorkspace();
+    }
+
+    function renderSplitPanelDynamicFields(stu, lesson) {
+      const cols = ensureStudentColumns(stu);
+      const container = document.getElementById('panelDynamicColumnsContainer');
+
+      const textCols = cols.filter(c => c.type === 'TEXT');
+      const checkCols = cols.filter(c => c.type === 'CHECKBOX');
+
+      let html = textCols.map(c => {
+        const val = getLessonCellValue(lesson, c);
+        const isShort = c.role === 'SESSION' || c.role === 'STAGE';
+        return `
+          <div>
+            <label class="block text-[11px] font-semibold text-slate-600 mb-1">${escapeHtml(c.title)}</label>
+            ${isShort
+              ? `<input type="text" data-col-key="${c.key}" value="${escapeHtml(val)}" oninput="saveFromSplitPanel()" class="w-full text-xs border border-slate-300 rounded-lg px-2.5 py-1.5 font-medium">`
+              : `<textarea data-col-key="${c.key}" oninput="saveFromSplitPanel()" rows="3" class="w-full text-xs border border-slate-300 rounded-lg p-2.5 leading-relaxed resize-y">${escapeHtml(val)}</textarea>`
+            }
+          </div>`;
+      }).join('');
+
+      if (checkCols.length > 0) {
+        html += `<div class="flex flex-wrap items-center gap-4 pt-2 border-t border-slate-100">` +
+          checkCols.map(c => {
+            const checked = getLessonCellValue(lesson, c);
+            return `
+              <label class="flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer">
+                <input type="checkbox" data-col-key="${c.key}" ${checked ? 'checked' : ''} onchange="saveFromSplitPanel()" class="w-4 h-4 accent-emerald-600 rounded">
+                ${escapeHtml(c.title)}
+              </label>`;
+          }).join('') +
+        `</div>`;
+      }
+
+      container.innerHTML = html;
     }
 
     function saveFromSplitPanel() {
@@ -1768,15 +2342,25 @@
       const tVal = document.getElementById('panelStartHour24').value || '19:30';
       lesson.startTime = dVal ? `${dVal}T${tVal}` : '';
       lesson.prepReminderMins = Number(document.getElementById('panelReminderMins').value);
-
       lesson.script = document.getElementById('panelScript').value;
-      lesson.buoi = document.getElementById('panelBuoi').value;
-      lesson.giaiDoan = document.getElementById('panelGiaiDoan').value;
-      lesson.noiDung = document.getElementById('panelNoiDung').value;
-      lesson.btvn = document.getElementById('panelBtvn').value;
-      lesson.nhanXet = document.getElementById('panelNhanXet').value;
-      lesson.tienDo = document.getElementById('panelTienDo').checked;
-      lesson.hocPhi = document.getElementById('panelHocPhi').checked;
+
+      const cols = ensureStudentColumns(stu);
+      const inputs = document.querySelectorAll('#panelDynamicColumnsContainer [data-col-key]');
+      inputs.forEach(el => {
+        const key = el.getAttribute('data-col-key');
+        const col = cols.find(c => c.key === key);
+        if (!col) return;
+        if (col.type === 'CHECKBOX') {
+          lesson[key] = el.checked;
+          if (col.role === 'PROGRESS' && el.checked) {
+            lesson.prepStatus = 'READY';
+            document.getElementById('panelPrepStatus').value = 'READY';
+          }
+        } else {
+          lesson[key] = el.value;
+        }
+      });
+
       saveToLocal();
       pushUpdateToGoogleSheet(stu, lesson);
       renderHeaderAndCounts();
@@ -1792,23 +2376,52 @@
       renderMainWorkspace();
     }
 
+    // ==================== THÊM / XÓA DÒNG BUỔI HỌC & RẢI LỊCH ====================
+    function createBlankLessonRow(stu, rowIndex, lessonNum) {
+      const cols = ensureStudentColumns(stu);
+      const newLesson = {
+        rowIndex,
+        startTime: '',
+        prepReminderMins: 45,
+        prepStatus: 'UNPREPARED',
+        script: ''
+      };
+      cols.forEach((c, idx) => {
+        if (c.type === 'CHECKBOX') {
+          newLesson[c.key] = false;
+        } else if (c.role === 'SESSION' || idx === 0) {
+          newLesson[c.key] = `Buổi ${lessonNum}\n(Chưa xếp)`;
+        } else if (c.role === 'STAGE') {
+          const prev = stu.lessons[stu.lessons.length - 1];
+          newLesson[c.key] = prev ? (prev[c.key] || '') : '';
+        } else {
+          newLesson[c.key] = '';
+        }
+      });
+      return newLesson;
+    }
+
     function addSingleNewLesson() {
       const stu = getActiveStudent();
       if (!stu) return;
       const nextRowIndex = stu.lessons.length > 0 ? Math.max(...stu.lessons.map(l => l.rowIndex)) + 1 : 2;
       const nextNum = stu.lessons.length + 1;
-      const newLesson = {
-        rowIndex: nextRowIndex,
-        buoi: `Buổi ${nextNum}\n(Chưa xếp)`,
-        giaiDoan: stu.lessons[stu.lessons.length - 1]?.giaiDoan || 'Giai đoạn tiếp theo',
-        noiDung: '', btvn: '', tienDo: false, nhanXet: '', hocPhi: false,
-        startTime: '', prepReminderMins: 45, prepStatus: 'UNPREPARED', script: ''
-      };
+      const newLesson = createBlankLessonRow(stu, nextRowIndex, nextNum);
       stu.lessons.push(newLesson);
       saveToLocal();
       pushUpdateToGoogleSheet(stu, newLesson);
       renderAll();
       openSplitPanel(nextRowIndex);
+    }
+
+    function deleteSingleLessonRow(rowIndex) {
+      const stu = getActiveStudent();
+      if (!stu) return;
+      if (!confirm('Xóa dòng buổi học này khỏi bảng?')) return;
+      stu.lessons = stu.lessons.filter(l => l.rowIndex !== rowIndex);
+      if (state.selectedRowIndex === rowIndex) closeSplitPanel();
+      saveToLocal();
+      renderAll();
     }
 
     function openAutoScheduleModal() {
@@ -1841,20 +2454,15 @@
       for (let i = 0; i < addMoreCount; i++) {
         const nextRowIndex = stu.lessons.length > 0 ? Math.max(...stu.lessons.map(l => l.rowIndex)) + 1 : 2;
         const nextLessonNum = stu.lessons.length + 1;
-        stu.lessons.push({
-          rowIndex: nextRowIndex,
-          buoi: `Buổi ${nextLessonNum}`,
-          giaiDoan: stu.lessons[stu.lessons.length - 1]?.giaiDoan || 'Giai đoạn tiếp theo',
-          noiDung: '', btvn: '', tienDo: false, nhanXet: '', hocPhi: false,
-          startTime: '', prepReminderMins: 45, prepStatus: 'UNPREPARED', script: ''
-        });
+        stu.lessons.push(createBlankLessonRow(stu, nextRowIndex, nextLessonNum));
       }
 
+      const sessCol = getColumnByRole(stu, 'SESSION', 'buoi');
       let curDate = new Date(startDateStr + 'T00:00:00');
       const pad = n => String(n).padStart(2, '0');
 
       stu.lessons.forEach((lesson, idx) => {
-        if (!lesson.tienDo) {
+        if (!isLessonCompleted(stu, lesson)) {
           while (!checkedDays.includes(curDate.getDay())) {
             curDate.setDate(curDate.getDate() + 1);
           }
@@ -1862,7 +2470,9 @@
           const mm = pad(curDate.getMonth() + 1);
           const yyyy = curDate.getFullYear();
 
-          lesson.buoi = `Buổi ${idx + 1}\n(${dd}/${mm})`;
+          const label = `Buổi ${idx + 1}\n(${dd}/${mm})`;
+          if (sessCol) lesson[sessCol.key] = label;
+          lesson.buoi = label;
           lesson.startTime = `${yyyy}-${mm}-${dd}T${classTime}`;
           curDate.setDate(curDate.getDate() + 1);
         }
@@ -1874,11 +2484,13 @@
       renderAll();
     }
 
+    // ==================== MỞ LỚP MỚI (HỖ TRỢ 3 CHẾ ĐỘ BỐ CỤC BẢNG & DOCS OPTIONAL) ====================
     function openAddStudentModal() {
       document.getElementById('newStudentName').value = '';
       document.getElementById('newStudentSheetUrl').value = '';
       document.getElementById('newStudentDocsUrl').value = '';
       document.getElementById('newStudentHwDocsUrl').value = '';
+      document.getElementById('newStudentTemplateMode').value = 'DEFAULT_7';
       document.getElementById('addStudentModal').classList.remove('hidden');
     }
     function closeAddStudentModal() { document.getElementById('addStudentModal').classList.add('hidden'); }
@@ -1890,19 +2502,52 @@
       const hwDocsUrl = document.getElementById('newStudentHwDocsUrl').value.trim();
       const defaultTime = document.getElementById('newStudentTime24').value || '19:30';
       const daysOfWeek = Array.from(document.querySelectorAll('#newStudentDays input:checked')).map(el => parseInt(el.value, 10));
-      const initMode = document.getElementById('newStudentInitMode').value;
+      const templateMode = document.getElementById('newStudentTemplateMode').value;
 
-      if (!name || !sheetUrl) { alert('Vui lòng điền Tên và Link Sheet!'); return; }
+      if (!name || !sheetUrl) {
+        alert('Vui lòng điền Tên Lớp/Học viên và Link Google Sheets Lộ trình!');
+        return;
+      }
+
+      let initialColumns = getDefault7ColumnsSchema();
+      if (templateMode === 'CUSTOM_BUILDER') {
+        initialColumns = [
+          { key: 'buoi', title: 'Buổi / Ngày học', type: 'TEXT', role: 'SESSION', width: '130px' },
+          { key: 'noiDung', title: 'Nội dung bài học', type: 'TEXT', role: 'CONTENT', width: '320px' },
+          { key: 'tienDo', title: 'Đã dạy xong', type: 'CHECKBOX', role: 'PROGRESS', width: '105px' }
+        ];
+      }
 
       const newStu = {
-        id: 'stu_' + Date.now(), name, sheetUrl,
-        docsUrl: docsUrl || '#', hwDocsUrl: hwDocsUrl || '#',
-        defaultTime, daysOfWeek, lessons: []
+        id: 'stu_' + Date.now(),
+        name,
+        sheetUrl,
+        docsUrl: docsUrl || '',
+        hwDocsUrl: hwDocsUrl || '',
+        defaultTime,
+        daysOfWeek,
+        columns: initialColumns,
+        lessons: []
       };
+
       state.students.push(newStu);
       state.activeStudentId = newStu.id;
-      saveToLocal(); closeAddStudentModal(); renderAll();
-      if (initMode === 'READ_SHEET') await syncFromGoogleSheet(true);
+      saveToLocal();
+      closeAddStudentModal();
+      renderAll();
+
+      if (templateMode === 'AUTO_FROM_SHEET') {
+        setSyncBadge('SYNCING');
+        const ok = await syncSingleStudentObject(newStu, true);
+        saveToLocal();
+        renderAll();
+        setSyncBadge(ok ? 'SAVED' : 'ERROR');
+      } else if (templateMode === 'DEFAULT_7') {
+        await syncFromGoogleSheet(false);
+      } else if (templateMode === 'CUSTOM_BUILDER') {
+        addSingleNewLesson();
+        openColumnManagerModal();
+      }
     }
 
     function setSyncBadge(status) {
