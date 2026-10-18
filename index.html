@@ -1706,11 +1706,14 @@
         const cols = ensureStudentColumns(stu);
         const rowsPayload = stu.lessons.map(l => {
           const rowDataObj = {};
-          cols.forEach(c => {
+          const rowData = cols.map(c => {
             const val = getLessonCellValue(l, c);
-            rowDataObj[c.key] = c.type === 'CHECKBOX' ? !!val : String(val || '');
+            const cleanVal = c.type === 'CHECKBOX' ? !!val : String(val || '');
+            rowDataObj[c.key] = cleanVal;
+            return cleanVal;
           });
-          return { rowIndex: l.rowIndex, rowDataObj };
+          while (rowData.length < 7) rowData.push('');
+          return { rowIndex: l.rowIndex, rowData, rowDataObj };
         });
 
         await fetch(state.gasWebhookUrl, {
@@ -1726,7 +1729,7 @@
         });
 
         setSyncBadge('SAVED');
-        alert(`✨ Đã cập nhật Google Sheets thành công! Bảng đã được tự động tô màu Navy, kẻ khung, co giãn cột và chèn Checkbox.`);
+        alert(`✅ Đã cập nhật toàn bộ ${rowsPayload.length} buổi học sang Google Sheets thành công!`);
       } catch (e) {
         setSyncBadge('ERROR');
         alert('❌ Lỗi khi cập nhật lên Google Sheets.');
@@ -1737,10 +1740,11 @@
       if (!state.gasWebhookUrl || !student.sheetUrl) return;
       const parsedUrl = parseGoogleSheetUrl(student.sheetUrl);
       const cols = ensureStudentColumns(student);
-      const rowDataArr = cols.map(c => {
+      const rowData = cols.map(c => {
         const val = getLessonCellValue(lesson, c);
         return c.type === 'CHECKBOX' ? !!val : String(val || '');
       });
+      while (rowData.length < 7) rowData.push('');
       const columnTypes = cols.map(c => c.type);
 
       try {
@@ -1752,7 +1756,8 @@
             sheetUrl: student.sheetUrl,
             gid: parsedUrl ? parsedUrl.gid : '0',
             rowIndex: lesson.rowIndex,
-            rowDataArr: rowDataArr,
+            rowData: rowData,
+            rowDataArr: rowData,
             columnTypes: columnTypes
           })
         });
