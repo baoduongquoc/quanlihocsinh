@@ -261,7 +261,7 @@
         <button onclick="openEditLinksModal()" class="inline-flex items-center gap-1 px-2 py-1.5 rounded-lg border border-slate-300 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold transition" title="Sửa Link Sheet & Docs (Tùy chọn)">
           <i class="fa-solid fa-link"></i>
         </button>
-        <button onclick="deleteCurrentStudent()" class="inline-flex items-center gap-1 px-2 py-1.5 rounded-lg border border-rose-200 bg-rose-50 hover:bg-rose-600 hover:text-white text-rose-600 text-xs font-semibold transition" title="Xóa lớp học này">
+        <button type="button" onclick="deleteCurrentStudent()" class="inline-flex items-center gap-1 px-2.5 py-1.5 rounded-lg border border-rose-200 bg-rose-50 hover:bg-rose-600 hover:text-white text-rose-600 text-xs font-semibold transition cursor-pointer" title="Xóa lớp học này">
           <i class="fa-solid fa-trash-can"></i>
         </button>
       </div>
@@ -1033,7 +1033,7 @@
     }
 
     function getActiveStudent() {
-      return state.students.find(s => s.id === state.activeStudentId);
+      return state.students.find(s => String(s.id) === String(state.activeStudentId));
     }
 
     function updateClockGMT7() {
@@ -1766,7 +1766,37 @@
       } catch (e) {}
     }
 
-    function deleteCurrentStudent() { if (state.activeStudentId) deleteStudent(state.activeStudentId); }
+    // ==================== CHỨC NĂNG XÓA HỌC VIÊN / LỚP HỌC (ĐÃ KHÔI PHỤC HOÀN CHỈNH) ====================
+    async function deleteStudent(studentId, event) {
+      if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      const stu = state.students.find(s => String(s.id) === String(studentId));
+      if (!stu) return;
+      if (!confirm(`Bạn có chắc chắn muốn xóa lớp "${stu.name}" không?`)) return;
+
+      state.students = state.students.filter(s => String(s.id) !== String(studentId));
+
+      if (String(state.activeStudentId) === String(studentId)) {
+        state.activeStudentId = state.students.length > 0 ? state.students[0].id : null;
+        closeSplitPanel();
+      }
+
+      localStorage.setItem(getLocalStorageKey(), JSON.stringify(state.students));
+      localStorage.setItem('ielts_hub_students_v2', JSON.stringify(state.students));
+      renderAll();
+      await pushAccountToCloud(false);
+    }
+
+    function deleteCurrentStudent() {
+      const stu = getActiveStudent();
+      if (!stu) {
+        alert('Chưa có lớp nào được chọn để xóa!');
+        return;
+      }
+      deleteStudent(stu.id);
+    }
 
     function openEditLinksModal() {
       const stu = getActiveStudent();
@@ -1795,19 +1825,25 @@
 
     function renderStudentSidebar() {
       const container = document.getElementById('studentList');
-      container.innerHTML = state.students.length === 0 ? `<div class="text-xs text-slate-400 italic p-4 text-center border border-dashed border-slate-700 rounded-xl">Chưa có lớp học nào.</div>` : '';
-      state.students.forEach(stu => {
-        const isActive = stu.id === state.activeStudentId;
+      if (!container) return;
+      if (state.students.length === 0) {
+        container.innerHTML = `<div class="text-xs text-slate-400 italic p-4 text-center border border-dashed border-slate-700 rounded-xl">Chưa có lớp học nào.</div>`;
+        return;
+      }
+      container.innerHTML = state.students.map(stu => {
+        const isActive = String(stu.id) === String(state.activeStudentId);
         const done = (stu.lessons || []).filter(l => isLessonCompleted(stu, l)).length;
-        container.innerHTML += `
+        return `
           <div onclick="selectStudent('${stu.id}'); toggleMobileSidebar(false);" class="group p-2.5 rounded-xl cursor-pointer transition flex items-center justify-between ${isActive ? 'bg-blue-600 text-white shadow-md' : 'text-slate-300 hover:bg-slate-800'}">
             <div class="truncate pr-2">
               <div class="font-semibold text-xs truncate">${escapeHtml(stu.name)}</div>
               <div class="text-[11px] ${isActive ? 'text-blue-100' : 'text-slate-400'}">Đã dạy: ${done}/${(stu.lessons || []).length} buổi • Ca ${stu.defaultTime || '19:30'}</div>
             </div>
-            <button onclick="deleteStudent('${stu.id}', event)" class="opacity-0 group-hover:opacity-100 p-1 rounded hover:bg-rose-600 text-white"><i class="fa-solid fa-trash-can text-[10px]"></i></button>
+            <button type="button" onclick="deleteStudent('${stu.id}', event)" class="p-1.5 rounded-lg bg-slate-800/40 hover:bg-rose-600 text-white transition shrink-0" title="Xóa lớp học này">
+              <i class="fa-solid fa-trash-can text-xs"></i>
+            </button>
           </div>`;
-      });
+      }).join('');
     }
 
     function renderHeaderAndCounts() {
