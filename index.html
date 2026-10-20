@@ -1746,6 +1746,7 @@
       });
       while (rowData.length < 7) rowData.push('');
       const columnTypes = cols.map(c => c.type);
+      const columnTitles = cols.map(c => c.title);
 
       try {
         await fetch(state.gasWebhookUrl, {
@@ -1758,19 +1759,11 @@
             rowIndex: lesson.rowIndex,
             rowData: rowData,
             rowDataArr: rowData,
-            columnTypes: columnTypes
+            columnTypes: columnTypes,
+            columnTitles: columnTitles
           })
         });
       } catch (e) {}
-    }
-
-    function deleteStudent(studentId, event) {
-      if (event) event.stopPropagation();
-      const stu = state.students.find(s => s.id === studentId);
-      if (!stu || !confirm(`Xóa lớp "${stu.name}"?`)) return;
-      state.students = state.students.filter(s => s.id !== studentId);
-      if (state.activeStudentId === studentId) { state.activeStudentId = state.students[0]?.id || null; closeSplitPanel(); }
-      saveToLocal(); renderAll();
     }
 
     function deleteCurrentStudent() { if (state.activeStudentId) deleteStudent(state.activeStudentId); }
